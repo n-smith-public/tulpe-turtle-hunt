@@ -1,0 +1,43 @@
+.titleText {
+    color: wheat;
+    position: fixed;
+    left: 48%;
+    top: 15%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    align-items: center;
+    z-index: 2;
+    font-size: 30px;
+}
+
+.titleBackground {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('../Media/background.png');
+    alt: "Background Image";
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.titleForeground {
+    position: absolute;
+    z-index: 1;
+    left: 7%;
+    size: auto;
+    height: 100vh;
+}
+
+.introText {
+    color: wheat;
+    position: absolute;
+    top: 30%;
+    left:43%;
+    align-items: center;
+    max-width: 80%;
+    font-size: 15px;
+    line-height: 1.6;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    z-index: 2;
+    padding: 10px;
+}

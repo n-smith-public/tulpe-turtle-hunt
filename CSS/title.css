@@ -1,7 +1,7 @@
 .titleText {
     color: wheat;
     position: fixed;
-    left: 48%;
+    left: 49%;
     top: 15%;
     font-family: Georgia, 'Times New Roman', Times, serif;
     align-items: center;
@@ -31,7 +31,7 @@
 .introText {
     color: wheat;
     position: absolute;
-    top: 30%;
+    top: 25%;
     left:43%;
     align-items: center;
     max-width: 80%;
@@ -40,4 +40,5 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     z-index: 2;
     padding: 10px;
+    text-align: center;
 }

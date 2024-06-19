@@ -29,7 +29,7 @@
                         <input type="text" id="discord" name="discord">
                         <label for="comments">Comments:</label>
                         <input id="comments" name="comments"></textarea>
-                        <button type="submit">Submit</button>
+                        <button type="submit" id="submitBtn">Submit</button>
                     </form>
                 </div>
             </section>
@@ -37,9 +37,20 @@
 
         <script src="script.js"></script>
     <script>
-        document.getElementById('dataForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            fetch('/')
+            .then(() => {
+                setTimeout(function() {
+                    submitForm();
+                }, 60000);
+            })
+            .catch(error => {
+                console.error('Error waking up the server: ', error);
+                alert('There was an error. Please try again later. If this persists, contact greenbueller@greenbueller.com');
+            });
+        });
 
+        function submitForm() {
             const formData = {
                 firstName: document.getElementById('firstName').value,
                 lastName: document.getElementById('lastName').value,
@@ -62,9 +73,9 @@
                 alert(data.message);
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error: ', error);
             });
-        });
+        }
     </script>
     </body>
 </html>

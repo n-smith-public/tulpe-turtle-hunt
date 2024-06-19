@@ -1,12 +1,8 @@
-.titleText {
-    color: wheat;
-    position: fixed;
-    left: 49%;
-    top: 15%;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    align-items: center;
-    z-index: 2;
-    font-size: 30px;
+/* Main Sections */
+body, html, main, section {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .titleBackground {
@@ -14,26 +10,55 @@
     padding: 0;
     height: 100vh;
     background-image: url('../Media/background.png');
-    alt: "Background Image";
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    background-color: slategray;
 }
 
 .titleForeground {
-    position: absolute;
+    position: relative;
     z-index: 1;
-    left: 7%;
-    size: auto;
-    height: 100vh;
+    height: auto;
+    max-width: 90%;
+}
+
+button {
+    background-color: #4285F4;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #357AE8;
+}
+
+/* Disclaimer Page */
+
+.titleText {
+    color: wheat;
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    align-items: center;
+    z-index: 2;
+    font-size: 30px;
 }
 
 .introText {
     color: wheat;
-    position: absolute;
-    top: 25%;
-    left:43%;
-    align-items: center;
     max-width: 80%;
     font-size: 15px;
     line-height: 1.6;
@@ -41,4 +66,90 @@
     z-index: 2;
     padding: 10px;
     text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .titleText {
+        font-size: 24px;
+    }
+
+    .titleText.submit {
+        font-size: 24px;
+    }
+
+    .introText {
+        font-size: 14px;
+    }
+
+    .titleForeground {
+        max-width: 100%;
+    }
+}
+
+.sign-in-logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Submit Page */
+
+.titleText.submit {
+    color: wheat;
+    position: absolute;
+    text-align: center;
+    top: 15%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    align-items: center;
+    z-index: 2;
+    font-size: 30px;
+}
+
+.submission {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 2;
+    top: 53%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.submission label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.submission input,
+.submission textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.submission button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submission button:hover {
+    background-color: #45a049;
 }

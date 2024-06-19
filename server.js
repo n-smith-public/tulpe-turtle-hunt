@@ -59,11 +59,11 @@ const isAuthenticated = (req, res, next) => {
 };
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] })
 );
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/'}),
+    passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         res.sendFile(path.join(__dirname, 'submit.html'));
     }
@@ -94,25 +94,24 @@ const validateForm = [
 ];
 
 app.post('/submit', validateForm, (req, res) => {
-  const { firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
+    const { firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const sql = 'INSERT INTO userData (firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  const values = [firstName, lastName, pronouns, lodge, email, discord, comments];
-
-  pool.query(sql, values, (error, results) => {
-    if (error) {
-      console.error('Error inserting data:', error);
-      res.status(500).send({ error: 'Error inserting data' });
-    } else {
-      console.log('Data inserted successfully: ', results);
-      res.send({ message: 'Data submitted successfully!' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
-  });
+
+    const sql = 'INSERT INTO userData (firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [firstName, lastName, pronouns, lodge, email, discord, comments];
+
+    pool.query(sql, values, (error, results) => {
+        if (error) {
+            console.error('Error inserting data:', error);
+            return res.status(500).send({ error: 'Error inserting data' });
+        }
+        console.log('Data inserted successfully: ', results);
+        res.send({ message: 'Data submitted successfully!' });
+    });
 });
 
 app.listen(port, () => {

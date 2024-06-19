@@ -36,46 +36,41 @@
         </main>
 
         <script src="script.js"></script>
-    <script>
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            fetch('/')
-            .then(() => {
-                setTimeout(function() {
-                    submitForm();
-                }, 60000);
-            })
-            .catch(error => {
-                console.error('Error waking up the server: ', error);
-                alert('There was an error. Please try again later. If this persists, contact greenbueller@greenbueller.com');
+        <script>
+            document.getElementById('dataForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+        
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    pronouns: document.getElementById('pronouns').value,
+                    lodge: document.getElementById('lodge').value,
+                    email: document.getElementById('email').value,
+                    discord: document.getElementById('discord').value,
+                    comments: document.getElementById('comments').value,
+                };
+        
+                fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error. Please try again later. If this persists, contact greenbueller@greenbueller.com');
+                });
             });
-        });
-
-        function submitForm() {
-            const formData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                pronouns: document.getElementById('pronouns').value,
-                lodge: document.getElementById('lodge').value,
-                email: document.getElementById('email').value,
-                discord: document.getElementById('discord').value,
-                comments: document.getElementById('comments').value,
-            };
-
-            fetch('/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => {
-                console.error('Error: ', error);
-            });
-        }
-    </script>
+        </script>
     </body>
 </html>

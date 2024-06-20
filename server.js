@@ -7,16 +7,29 @@ const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const path = require('path');
+const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+const redisClient = redis.createClient({
+    host: process.env.DB_CACHE_ENDPOINT,
+    port: 6379,
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(session({
+    store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: true,
+        httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000,
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

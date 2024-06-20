@@ -7,16 +7,28 @@ const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const path = require('path');
-const RedisStore = require('connect-redis')(session);
-const redis = require('redis');
+const Redis = require('ioredis');
+const RedisStore = require('connect-redis').default;
 
 const app = express();
 const port = process.env.PORT || 3000;
+const redisHost = process.env.DB_CACHE_ENDPOINT;
+const redisPort = 6379;
 
-const redisClient = redis.createClient({
-    host: process.env.DB_CACHE_ENDPOINT,
-    port: 6379,
+const redisClient = new Redis({
+    host: redisHost,
+    port: redisPort,
 });
+
+redisClient.on('connect', function() {
+    console.log('Connected to Redis');
+});
+
+redisClient.on('error', function(err) {
+    console.error('Redis connection error: ', err);
+});
+
+module.exports = redisClient;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));

@@ -3,48 +3,44 @@ const mysql = require('mysql');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const path = require('path');
-const Redis = require('ioredis');
+const swal = require('sweetalert');
+const redis = require('ioredis');
 const RedisStore = require('connect-redis').default;
 
 const app = express();
 const port = process.env.PORT || 3000;
-const redisHost = process.env.DB_CACHE_ENDPOINT;
-const redisPort = 19549;
-const redisPassword = process.env.DB_CACHE_PASSWORD;
-
-const redisClient = new Redis({
-    host: redisHost,
-    port: redisPort,
-    password: redisPassword,
-});
-
-redisClient.on('connect', function() {
-    console.log('Connected to Redis');
-});
-
-redisClient.on('error', function(err) {
-    console.error('Redis connection error: ', err);
-});
-
-module.exports = redisClient;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+
+const redisClient = redis.createClient({
+    host: process.env.DB_CACHE_ENDPOINT,
+    port: 19549,
+    password: process.env.DB_CACHE_PASSWORD
+})
+
+redisClient.on('error', (err) => {
+    console.error('Redis error: ', err);
+})
+
+redisClient.on('connect', function() {
+    console.log('Connected to Redis.');
+})
+
 app.use(session({
     store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: true,
-        httpOnly: false,
-        maxAge: 24 * 60 * 60 * 1000,
+        secure: true
     }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -131,22 +127,45 @@ const pool = mysql.createPool({
   port: process.env.PORT || 3306,
 });
 
-const validateForm = [
-    check('firstName').notEmpty().withMessage('First name is required.'),
-    check('email').isEmail().withMessage('Invalid email format.'),
-];
+app.get('/userData/count', async (req, res) => {
+    try {
+        const query = 'SELECT COUNT(*) AS count FROM userData';
+        pool.query(query, (err, rows) => {
+            if (err) {
+                console.error('Error executing query: ', err);
+                return res.status(500).json({ error: 'Error executing query' });
+            }
 
-app.post('/submit-data', validateForm, (req, res) => {
+            if (!rows || rows.length === 0) {
+                throw new Error('No rows found in userData relation.');
+            }
+
+            const count = rows[0].count;
+            res.json({ count });
+        })
+    } catch (err) {
+        console.error('Error fetching row count: ', err);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+app.post('/submit-data', [
+    body('firstName').notEmpty().withMessage('First name is required field.'),
+    body('email').isEmail().withMessage('A valid email address is required.')
+], (req, res) => {
     const { firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
 
-    if (!req.isAuthenticated()) {
+    /*if (!req.isAuthenticated()) {
         res.status(400).send('Unauthorized.');
         return;
-    }
+    }*/
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ 
+            message: 'Validation of responses failed.', 
+            errors: errors.array().map(err => err.msg) 
+        });
     }
 
     const sql = 'INSERT INTO userData (firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -158,7 +177,7 @@ app.post('/submit-data', validateForm, (req, res) => {
             return res.status(500).send({ error: 'Error inserting data' });
         }
         console.log('Data inserted successfully: ', results);
-        res.send({ message: 'Data submitted successfully!' });
+        res.status(200).json({ message: 'Data submitted successfully!' });
     });
 });
 

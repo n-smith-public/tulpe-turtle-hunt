@@ -35,13 +35,34 @@
             </section>
         </main>
 
-        <div class="submission-sucess" id="successAlert">
-            <h2>Success!</h2>
-            <p>Your data has been successfully submitted. Have a great day!</p>
-            <button onclick="closeAlert()">OK</button>
-        </div>
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
+            /*function showSuccessAlert(message) {
+                const successAlert = document.getElementById('successAlert');
+                const successMessage = document.getElementById('successMessage');
+                if (successAlert) {
+                    console.log('Found alert element.');
+                    successAlert.style.display = 'block';
+                    if (successMessage) {
+                        successMessage.textContent = message;
+                    } else {
+                        console.error('successMessage element not found.');
+                    }
+                } else {
+                    console.error('successAlert element not found,');
+                }
+            }
+
+            function closeAlert() {
+                const successAlert = document.getElementById('successAlert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                    window.location.href = '/index.html';
+                } else {
+                    console.error('Error with hiding success alert elements.');
+                }
+            }*/
+
             function keepServerActive() {
                 fetch('/keep-active')
                     .then(response => {
@@ -91,6 +112,36 @@
                     });
             }
 
+            function submitDataNoAuth(formData) {
+                fetch('/submit-data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                .then(response => {
+                    return response.json().then(data => ({ status: response.status, body: data }));
+                })
+                .then(({ status, body }) => {
+                    if ( status !== 200) {
+                        if (body.errors) {
+                            throw new Error('Failed to submit data: ${body.errors.join(', ')}')
+                        } else {
+                            throw new Error ('Failed to submit data: ${body.message}')
+                        }
+                    }
+                    swal("Success!", "Your data has been successfully submitted. Have a great day!", "success")
+                    .then(function() {
+                        window.location.href='/index.html';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error submitting data: ', error);
+                    alert('There was an error submitting data. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                });
+            }
+
             function checkDatabaseConnection() {
                 fetch('/test-db')
                     .then(response => {
@@ -103,16 +154,6 @@
                         console.error('Error checking database connection:', error);
                         alert('There was an error checking the database connection. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
                 });
-            }
-
-            function showSuccessAlert(message) {
-                document.getElementById('successAlert').style.display = 'block';
-                document.getElementById('successMessage').textContent = message;
-            }
-
-            function closeAlert() {
-                document.getElementById('successAlert').style.display = 'none';
-                window.location.href = '/index.html';
             }
 
             document.getElementById('dataForm').addEventListener('submit', function(event) {
@@ -132,7 +173,7 @@
         
                 checkDatabaseConnection();
                 keepServerActive();
-                submitFormData(formData);
+                submitDataNoAuth(formData);
             });
         </script>
     </body>

@@ -35,6 +35,12 @@
             </section>
         </main>
 
+        <div class="submission-sucess" id="successAlert">
+            <h2>Success!</h2>
+            <p>Your data has been successfully submitted. Have a great day!</p>
+            <button onclick="closeAlert()">OK</button>
+        </div>
+
         <script>
             function keepServerActive() {
                 fetch('/keep-active')
@@ -48,31 +54,6 @@
                         console.error('Error maintaining activity with error: ', error);
                         alert('An error occurred between the server and your client. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
                     })
-            }
-
-            function submitFormDataDelayed(formData) {
-                setTimeout(() => {
-                    fetch('/submit-data', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to submit data');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        alert(data.message);
-                    })
-                    .catch(error => {
-                        console.error('Error submitting data:', error);
-                        alert('There was an error submitting data. Please try again later.  If the issue persists, contact greenbueller@greenbueller.com');
-                    });
-                }, 60000);
             }
 
             function submitFormData(formData) {
@@ -94,7 +75,7 @@
                                 return response.json();
                             })
                             .then(data => {
-                                alert(data.message);
+                                showSuccessAlert(data.message);
                             })
                             .catch(error => {
                                 console.error('Error submitting data: ', error);
@@ -122,6 +103,16 @@
                         console.error('Error checking database connection:', error);
                         alert('There was an error checking the database connection. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
                 });
+            }
+
+            function showSuccessAlert(message) {
+                document.getElementById('successAlert').style.display = 'block';
+                document.getElementById('successMessage').textContent = message;
+            }
+
+            function closeAlert() {
+                document.getElementById('successAlert').style.display = 'none';
+                window.location.href = '/index.html';
             }
 
             document.getElementById('dataForm').addEventListener('submit', function(event) {

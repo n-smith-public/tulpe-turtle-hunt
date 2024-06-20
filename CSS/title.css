@@ -153,3 +153,35 @@ button:hover {
 .submission button:hover {
     background-color: #45a049;
 }
+
+.submission-success {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    display: none;
+}
+
+.submission-success h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.submission-success p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.submission-success button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

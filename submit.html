@@ -5,78 +5,38 @@
         <link rel="stylesheet" href="/CSS/title.css">
     </head>
 
-    <body class="titleBackground">
-        <main>
-            <section>
-                <img class="titleForeground" src="/Media/foreground.png" alt="Foreground Image">
-                <div class="titleText">
-                    <h1 class="submit">Who Are You?</h1>
-                </div>
+    <body>
+       <div class="titleBackground">
+            <div class="foregroundContainer">
+                <img class="titleForegroundSubmit" src="/Media/foreground.png" alt="Foreground Image">
+                <div class="contentContainer">
+                    <h1 class="titleText">Who Are You?</h1>
 
-                <div class="submission">
-                    <form id="dataForm">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" id="lastName" name="lastName">
-                        <label for="pronouns">Pronouns:</label>
-                        <input type="text" id="pronouns" name="pronouns">
-                        <label for="lodge">Lodge:</label>
-                        <input type="text" id="lodge" name="lodge">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                        <label for="discord">Discord:</label>
-                        <input type="text" id="discord" name="discord">
-                        <label for="comments">Comments:</label>
-                        <input id="comments" name="comments"></textarea>
-                        <button type="submit" id="submitBtn">Submit</button>
-                    </form>
+                    <div class="submission">
+                        <form id="dataForm">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName">
+                            <label for="pronouns">Pronouns:</label>
+                            <input type="text" id="pronouns" name="pronouns">
+                            <label for="lodge">Lodge:</label>
+                            <input type="text" id="lodge" name="lodge">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <label for="discord">Discord:</label>
+                            <input type="text" id="discord" name="discord">
+                            <label for="comments">Comments:</label>
+                            <input id="comments" name="comments"></textarea>
+                            <button type="submit" id="submitBtn">Submit</button>
+                        </form>
+                    </div>
                 </div>
-            </section>
-        </main>
+            </div>
+       </div>
 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-            /*function showSuccessAlert(message) {
-                const successAlert = document.getElementById('successAlert');
-                const successMessage = document.getElementById('successMessage');
-                if (successAlert) {
-                    console.log('Found alert element.');
-                    successAlert.style.display = 'block';
-                    if (successMessage) {
-                        successMessage.textContent = message;
-                    } else {
-                        console.error('successMessage element not found.');
-                    }
-                } else {
-                    console.error('successAlert element not found,');
-                }
-            }
-
-            function closeAlert() {
-                const successAlert = document.getElementById('successAlert');
-                if (successAlert) {
-                    successAlert.style.display = 'none';
-                    window.location.href = '/index.html';
-                } else {
-                    console.error('Error with hiding success alert elements.');
-                }
-            }*/
-
-            function keepServerActive() {
-                fetch('/keep-active')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error maintaining activity.');
-                        }
-                        console.log('Server active.');
-                    })
-                    .catch(error => {
-                        console.error('Error maintaining activity with error: ', error);
-                        alert('An error occurred between the server and your client. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
-                    })
-            }
-
             function submitFormData(formData) {
                 fetch('/auth/status')
                     .then(response => response.json())
@@ -172,7 +132,6 @@
                 };
         
                 checkDatabaseConnection();
-                keepServerActive();
                 submitDataNoAuth(formData);
             });
         </script>

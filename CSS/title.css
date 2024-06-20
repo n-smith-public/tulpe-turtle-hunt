@@ -6,25 +6,54 @@ body, html, main, section {
 }
 
 .titleBackground {
-    margin: 0;
-    padding: 0;
     height: 100vh;
     background-image: url('../Media/background.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     position: relative;
     background-color: slategray;
+    overflow: hidden;
+}
+
+.foregroundContainer {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .titleForeground {
-    position: relative;
     z-index: 1;
     height: auto;
-    max-width: 90%;
+    max-width: 100%;
+    position: absolute;
+    top: -50%;
+    left: 0;
+}
+
+.titleForegroundSubmit {
+    z-index: 1;
+    height: auto;
+    max-width: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.contentContainer {
+    z-index: 2;
+    position: relative;
+    text-align: center;
+    color: wheat;
+    max-width: 80%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 button {
@@ -45,46 +74,14 @@ button:hover {
 /* Disclaimer Page */
 
 .titleText {
-    color: wheat;
-    position: absolute;
-    text-align: center;
-    top: 20%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    align-items: center;
-    z-index: 2;
     font-size: 30px;
+    margin-bottom: 20px;
 }
 
 .introText {
-    color: wheat;
-    max-width: 80%;
     font-size: 15px;
     line-height: 1.6;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    z-index: 2;
-    padding: 10px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-}
-
-.introText turtleText {
-    color: wheat;
-    max-width: 80%;
-    font-size: 15px;
-    line-height: 1.6;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    z-index: 2;
-    padding: 10px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%);
+    margin-bottom: 40px;
 }
 
 @media (max-width: 768px) {
@@ -111,42 +108,20 @@ button:hover {
     margin-right: 8px;
 }
 
-.rowCount {
-    color: wheat;
-    font-size: 15px;
-    line-height: 1.6;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    z-index: 2;
-    padding: 10px;
-}
-
 /* Submit Page */
 
 .titleText.submit {
-    color: wheat;
-    position: absolute;
     text-align: center;
-    top: 15%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    align-items: center;
     z-index: 2;
     font-size: 30px;
 }
 
 .submission {
-    max-width: 300px;
-    margin: 0 auto;
     padding: 10px;
     background-color: transparent;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
     z-index: 2;
-    top: 53%;
-    left: 45%;
-    transform: translate(-50%, -50%);
 }
 
 .submission label {
@@ -176,36 +151,4 @@ button:hover {
 
 .submission button:hover {
     background-color: #45a049;
-}
-
-.submission-success {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-    display: none;
-}
-
-.submission-success h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.submission-success p {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.submission-success button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
 }

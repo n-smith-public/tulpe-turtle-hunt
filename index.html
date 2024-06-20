@@ -4,54 +4,54 @@
     <title>Welcome</title>
     <link rel="stylesheet" href="CSS/title.css">
 </head>
-<body class="titleBackground">
-    <main>
-        <section>
+<body>
+    <div class="titleBackground">
+        <div class="foregroundContainer">
             <img class="titleForeground" src="Media/foreground.png" alt="Foreground Image">
-            <h1 class="titleText">Welcome!</h1>
-
-            <div class="introText">
-                <p>Hello! You have reached turtle.greenbueller.com!</p>
-                <p>Please wait for the rest of the website to be finished!</p>
-                <br> <br>
-                <form>
-                    <button type="button" onclick="moveToSubmissionPage()">
-                        <span class="sign-in-logo">
-                            <img src="Media/signIn.svg" alt="Google Logo">
-                        </span>
-                        Continue
-                    </button>
-                </form>
-
-                <script>
-                    function moveToSubmissionPage() {
-                        window.location.href = '/submit.html';
-                    }
-                </script>
-                <br><br>
-                <div id ="rowCountContainer">
-                    <h2>Turtles Found So Far: </h2>
-                    <p class="turtleText" id="rowCount"></p>
-                </div>
-
-                <script>
-                    async function fetchRowCount() {
-                        try {
-                            const response = await fetch('/userData/count');
-                            if (!response.ok) {
-                                throw new Error('Failed to fetch row count');
-                            }
-                            const data = await response.json();
-                            document.getElementById('rowCount').textContent = data.count;
-                        } catch (error) {
-                            console.error('Error fetching row count: ', error);
+            <div class="contentContainer">
+                <h1 class="titleText">Welcome!</h1>
+                <div class="introText">
+                    <p>Hello! You have reached turtle.greenbueller.com!</p>
+                    <p>Please wait for the rest of the website to be finished!</p>
+                    <br><br>
+                    <div id ="rowCountContainer">
+                        <h2>Turtles Found So Far: </h2>
+                        <p id="rowCount"></p>
+                    </div>
+                    <br> <br>
+                    <form>
+                        <button type="button" onclick="moveToSubmissionPage()">
+                            <span class="sign-in-logo">
+                                <img src="Media/signIn.svg" alt="Google Logo">
+                            </span>
+                            Continue
+                        </button>
+                    </form>
+                    <script>
+                        function moveToSubmissionPage() {
+                            window.location.href = '/submit.html';
                         }
-                    }
-
-                    fetchRowCount();
-                </script>
+                    </script>
+                </div>
             </div>
-        </section>
-    </main>
+
+            <script>
+                async function fetchRowCount() {
+                    try {
+                        const response = await fetch('/userData/count');
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch row count');
+                        }
+                        const data = await response.json();
+                        document.getElementById('rowCount').textContent = data.count;
+                    } catch (error) {
+                        console.error('Error fetching row count: ', error);
+                    }
+                }
+
+                fetchRowCount();
+            </script>
+        </div>
+    </div>
 </body>
 </html>

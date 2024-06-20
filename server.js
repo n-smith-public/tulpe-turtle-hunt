@@ -28,6 +28,7 @@ passport.use(new GoogleStrategy({
     scope: [ 'profile', 'email' ],
 },
 (accessToken, refreshToken, profile, done) => {
+    console.log('Google Strategy callback performed successfully.');
     done(null, profile);
 }));
 
@@ -84,8 +85,18 @@ app.get('/keep-active', (req, res) => {
     res.status(200).send('Server active');
 })
 
+app.get('/test-db', (req, res) => {
+    pool.query('SELECT 1', (error, results) => {
+        if (error) {
+            console.error('A database connection error occured: ', error);
+            return res.status(500).send('Database connection error.');
+        }
+        res.send('Database connection successful.');
+    })
+})
+
 const pool = mysql.createPool({
-  connectionLimit: 10,
+  connectionLimit: 10000,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

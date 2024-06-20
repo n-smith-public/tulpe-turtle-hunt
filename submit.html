@@ -110,6 +110,20 @@
                     });
             }
 
+            function checkDatabaseConnection() {
+                fetch('/test-db')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Database connection failed');
+                        }
+                        console.log('Database connection successful');
+                    })
+                    .catch(error => {
+                        console.error('Error checking database connection:', error);
+                        alert('There was an error checking the database connection. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                });
+            }
+
             document.getElementById('dataForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -125,6 +139,7 @@
                     comments: document.getElementById('comments').value,
                 };
         
+                checkDatabaseConnection();
                 keepServerActive();
                 submitFormData(formData);
             });

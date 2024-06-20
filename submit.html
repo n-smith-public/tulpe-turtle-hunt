@@ -35,10 +35,85 @@
             </section>
         </main>
 
-        <script src="script.js"></script>
         <script>
+            function keepServerActive() {
+                fetch('/keep-active')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error maintaining activity.');
+                        }
+                        console.log('Server active.');
+                    })
+                    .catch(error => {
+                        console.error('Error maintaining activity with error: ', error);
+                        alert('An error occurred between the server and your client. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                    })
+            }
+
+            function submitFormDataDelayed(formData) {
+                setTimeout(() => {
+                    fetch('/submit-data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to submit data');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert(data.message);
+                    })
+                    .catch(error => {
+                        console.error('Error submitting data:', error);
+                        alert('There was an error submitting data. Please try again later.  If the issue persists, contact greenbueller@greenbueller.com');
+                    });
+                }, 60000);
+            }
+
+            function submitFormData(formData) {
+                fetch('/auth/status')
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.loggedIn) {
+                            fetch('/submit-data', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(formData),
+                            })
+                            .then(response => {
+                                if(!response.ok) {
+                                    throw new Error('Failed to submit data.')
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                alert(data.message);
+                            })
+                            .catch(error => {
+                                console.error('Error submitting data: ', error);
+                                alert('There was an error submitting data. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                            });
+                        } else {
+                            alert('You are not authenticated. Please log in first.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking authentication status: ', error);
+                        alert('There was an error with the authentication system. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                    });
+            }
+
             document.getElementById('dataForm').addEventListener('submit', function(event) {
                 event.preventDefault();
+
+                console.log('Submission entered.');
         
                 const formData = {
                     firstName: document.getElementById('firstName').value,
@@ -50,26 +125,8 @@
                     comments: document.getElementById('comments').value,
                 };
         
-                fetch('/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => { throw err; });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert(data.message);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error. Please try again later. If this persists, contact greenbueller@greenbueller.com');
-                });
+                keepServerActive();
+                submitFormData(formData);
             });
         </script>
     </body>

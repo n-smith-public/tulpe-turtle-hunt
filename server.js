@@ -25,6 +25,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    scope: [ 'profile', 'email' ],
 },
 (accessToken, refreshToken, profile, done) => {
     done(null, profile);
@@ -59,7 +60,7 @@ const isAuthenticated = (req, res, next) => {
 };
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] })
+    passport.authenticate('google', { scope: [ 'profile', 'email' ] })
 );
 
 app.get('/auth/google/callback',
@@ -79,6 +80,10 @@ app.get('/auth/status', (req, res) => {
     res.send({ loggedIn: req.isAuthenticated() });
 });
 
+app.get('/keep-active', (req, res) => {
+    res.status(200).send('Server active');
+})
+
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: process.env.DB_HOST,
@@ -93,8 +98,13 @@ const validateForm = [
     check('email').isEmail().withMessage('Invalid email format.'),
 ];
 
-app.post('/submit', validateForm, (req, res) => {
+app.post('/submit-data', validateForm, (req, res) => {
     const { firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
+
+    if (!req.isAuthenticated()) {
+        res.status(400).send('Unauthorized.');
+        return;
+    }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

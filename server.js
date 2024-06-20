@@ -13,11 +13,13 @@ const RedisStore = require('connect-redis').default;
 const app = express();
 const port = process.env.PORT || 3000;
 const redisHost = process.env.DB_CACHE_ENDPOINT;
-const redisPort = 6379;
+const redisPort = 19549;
+const redisPassword = process.env.DB_CACHE_PASSWORD;
 
 const redisClient = new Redis({
     host: redisHost,
     port: redisPort,
+    password: redisPassword,
 });
 
 redisClient.on('connect', function() {

@@ -95,8 +95,14 @@ app.get('/test-db', (req, res) => {
     })
 })
 
+app.use(errorHandler({ log: errorNotification }));
+
+function errorNotification(err, str, req) {
+  console.log('ERROR', err);
+}
+
 const pool = mysql.createPool({
-  connectionLimit: 10000,
+  connectionLimit: 60000,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

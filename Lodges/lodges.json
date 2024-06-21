@@ -1,0 +1,456 @@
+[
+    {
+        "label": "Eastern Region",
+        "children": [
+            {
+                "label": "Section E1",
+                "options": [
+                    { "value": "Jaccos Towne", "text": "Jaccos Towne Lodge"},
+                    { "value": "Kiondaga", "text": "Kiondaga Lodge"},
+                    { "value": "Kiskakon", "text": "Kiskakon Lodge"},
+                    { "value": "Nischa Cuppecat", "text": "Nischa Cuppecat Lodge"},
+                    { "value": "Sakima", "text": "Sakima Lodge"},
+                    { "value": "Takachsin", "text": "Takachsin Lodge"}
+                ]
+            },
+            {
+                "label": "Section E2",
+                "options": [
+                    { "value": "Mawat Woakus", "text": "Mawat Woakus Lodge"},
+                    { "value": "Miami", "text": "Miami Lodge"},
+                    { "value": "Mishigami", "text": "Mishigami Lodge"},
+                    { "value": "Tarhe", "text": "Tarhe Lodge"},
+                    { "value": "Tindeuchen", "text": "Tindeuchen Lodge"}
+                ]
+            },
+            {
+                "label": "Section E3",
+                "options": [
+                    { "value": "Ahoalan-Nachpikin", "text": "Ahoalan-Nachpikin Lodge"},
+                    { "value": "Chicksa", "text": "Chicksa Lodge"},
+                    { "value": "Ittawamba", "text": "Ittawamba Lodge"},
+                    { "value": "Kawida", "text": "Kawida Lodge"},
+                    { "value": "Nguttiehen", "text": "Nguttiehen Lodge"},
+                    { "value": "Pellissippi", "text": "Pellissippi Lodge"},
+                    { "value": "Sequoyah", "text": "Sequoyah Lodge"},
+                    { "value": "Talidandaganu'", "text": "Talidandaganu' Lodge"},
+                    { "value": "Wa-Hi-Nasa", "text": "Wa-Hi-Nasa Lodge"}
+                ]
+            },
+            {
+                "label": "Section E4",
+                "options": [
+                    { "value": "Ashwanchi Kinta", "text": "Ashwanchi Kinta Lodge"},
+                    { "value": "Cowikee", "text": "Cowikee Lodge"},
+                    { "value": "Sebooney Okasucca", "text": "Sebooney Okasucca Lodge"},
+                    { "value": "Ti'ak", "text": "Ti'ak Lodge"},
+                    { "value": "Watonala", "text": "Watonala Lodge"},
+                    { "value": "Woa Cholena", "text": "Woa Cholena Lodge"},
+                    { "value": "Yustaga", "text": "Yustaga Lodge"}
+                ]
+            },
+            {
+                "label": "Section E5",
+                "options": [
+                    { "value": "Aal-Pa-Tah", "text": "Aal-Pa-Tah Lodge"},
+                    { "value": "Echockotee", "text": "Echockotee Lodge"},
+                    { "value": "Osceola", "text": "Osceola Lodge"},
+                    { "value": "O-Shot-Caw", "text": "O-Shot-Caw Lodge"},
+                    { "value": "Semialachee", "text": "Semialachee Lodge"},
+                    { "value": "Tipisa", "text": "Tipisa Lodge"},
+                    { "value": "Uh-To-Yeh-Hut-Tee", "text": "Uh-To-Yeh-Hut-Tee Lodge"}
+                ]
+            },
+            {
+                "label": "Section E6",
+                "options": [
+                    { "value": "Alibamu", "text": "Alibamu Lodge"},
+                    { "value": "Aracoma", "text": "Aracoma Lodge"},
+                    { "value": "Chattahoochee", "text": "Chattahoochee Lodge"},
+                    { "value": "Coosa", "text": "Coosa Lodge"},
+                    { "value": "Echeconnee", "text": "Echeconnee Lodge"},
+                    { "value": "Ehwa Tawa Dee", "text": "Ehwa Tawa Dee Lodge"},
+                    { "value": "Ini-To", "text": "Ini-To Lodge"},
+                    { "value": "I-Tsu-La", "text": "I-Tsu-La Lodge"},
+                    { "value": "Mowogo", "text": "Mowogo Lodge"},
+                    { "value": "Waguli", "text": "Waguli Lodge"},
+                    { "value": "Withlacoochee", "text": "Withlacoochee Lodge"}
+                ]
+            },
+            {
+                "label": "Section E7",
+                "options": [
+                    { "value": "Atta Kulla Kulla", "text": "Atta Kulla Kulla Lodge"},
+                    { "value": "Bob White", "text": "Bob White Lodge"},
+                    { "value": "Catawba", "text": "Catawba Lodge"},
+                    { "value": "Eswau Huppeday", "text": "Eswau Huppeday Lodge"},
+                    { "value": "Itibapishe Iti Hollo", "text": "Itibapishe Iti Hollo Lodge"},
+                    { "value": "Muscogee", "text": "Muscogee Lodge"},
+                    { "value": "Santee", "text": "Santee Lodge"},
+                    { "value": "Skyuka", "text": "Skyuka Lodge"},
+                    { "value": "Tsali", "text": "Tsali Lodge"},
+                    { "value": "Unali'Yi", "text": "Unali'Yi Lodge"}
+                ]
+            },
+            {
+                "label": "Section E8",
+                "options": [
+                    { "value": "Croatan", "text": "Croatan Lodge"},
+                    { "value": "Klahican", "text": "Klahican Lodge"},
+                    { "value": "Nayawin Rar", "text": "Nayawin Rar Lodge"},
+                    { "value": "Occoneechee", "text": "Occoneechee Lodge"},
+                    { "value": "Tsoiotsi Tsogalii", "text": "Tsoiotsi Tsogalii Lodge"},
+                    { "value": "Wahissa", "text": "Wahissa Lodge"}
+                ]
+            },
+            {
+                "label": "Section E9",
+                "options": [
+                    { "value": "Blue Heron", "text": "Blue Heron Lodge"},
+                    { "value": "Nawakwa", "text": "Nawakwa Lodge"},
+                    { "value": "Shenandoah", "text": "Shenandoah Lodge"},
+                    { "value": "Shenshawpotoo", "text": "Shenshawpotoo Lodge"},
+                    { "value": "Tutelo", "text": "Tutelo Lodge"},
+                    { "value": "Wahunsenakah", "text": "Wahunsenakah Lodge"}
+                ]
+            },
+            {
+                "label": "Section E10",
+                "options": [
+                    { "value": "Amangamek-Wipit", "text": "Amangamek-Wipit Lodge"},
+                    { "value": "Nentico", "text": "Nentico Lodge"},
+                    { "value": "Nenntego", "text": "Nenntego Lodge"}
+                ]
+            },
+            {
+                "label": "Section E11",
+                "options": [
+                    { "value": "Guneukitschik", "text": "Guneukitschik Lodge"},
+                    { "value": "Kittatinny", "text": "Kittatinny Lodge"},
+                    { "value": "Octoraro", "text": "Octoraro Lodge"},
+                    { "value": "Sasquesahanough", "text": "Sasquesahanough Lodge"},
+                    { "value": "Wunita Gokhos", "text": "Wunita Gokhos Lodge"}
+                ]
+            },
+            {
+                "label": "Section E12",
+                "options": [
+                    { "value": "Allohak Menewi", "text": "Allohak Menewi Lodge"},
+                    { "value": "Kuskitannee", "text": "Kuskitannee Lodge"},
+                    { "value": "Monaken", "text": "Monaken Lodge"},
+                    { "value": "Wagion", "text": "Wagion Lodge"}
+                ]
+            },
+            {
+                "label": "Section E13",
+                "options": [
+                    { "value": "Erielhonan", "text": "Erielhonan Lodge"},
+                    { "value": "Marnoc", "text": "Marnoc Lodge"},
+                    { "value": "Menawngihella", "text": "Menawngihella Lodge"},
+                    { "value": "Netawatwees", "text": "Netawatwees Lodge"},
+                    { "value": "Onondaga", "text": "Onondaga Lodge"},
+                    { "value": "Sipp-O", "text": "Sipp-O Lodge"},
+                    { "value": "Takhonek", "text": "Takhonek Lodge"},
+                    { "value": "Tecumseh", "text": "Tecumseh Lodge"}
+                ]
+            },
+            {
+                "label": "Section E14",
+                "options": [
+                    { "value": "Ah'Tic", "text": "Ah'Tic Lodge"},
+                    { "value": "Gyantwachia", "text": "Gyantwachia Lodge"},
+                    { "value": "Ho-Nan-Ne-Ho-Ont", "text": "Ho-Nan-Ne-Ho-Ont Lodge"},
+                    { "value": "Langundowi", "text": "Langundowi Lodge"},
+                    { "value": "Woapeu Sisilija", "text": "Woapeu Sisilija Lodge"},
+                    { "value": "Wyona", "text": "Wyona Lodge"}
+                ]
+            },
+            {
+                "label": "Section E15",
+                "options": [
+                    { "value": "Ashokwahta", "text": "Ashokwahta Lodge"},
+                    { "value": "Ho-De-No-Sau-Nee", "text": "Ho-De-No-Sau-Nee Lodge"},
+                    { "value": "Lowanne Nimat", "text": "Lowanne Nimat Lodge"},
+                    { "value": "Tkaen Dod", "text": "Tkaen Dod Lodge"},
+                    { "value": "Tschipey Achtu", "text": "Tschipey Achtu Lodge"}
+                ]
+            },
+            {
+                "label": "Section E16",
+                "options": [
+                    { "value": "Ajapeu", "text": "Ajapeu Lodge"},
+                    { "value": "Kittan", "text": "Kittan Lodge"},
+                    { "value": "Ohkwaliha-Ka", "text": "Ohkwaliha-Ka Lodge"},
+                    { "value": "Otahnagon", "text": "Otahnagon Lodge"}
+                ]
+            },
+            {
+                "label": "Section E17",
+                "options": [
+                    { "value": "Ajapeu", "text": "Ajapeu Lodge"},
+                    { "value": "Black Eagle", "text": "Black Eagle Lodge"},
+                    { "value": "Japeechen", "text": "Japeechen Lodge"},
+                    { "value": "Lenape", "text": "Lenape Lodge"},
+                    { "value": "Lenapehoking", "text": "Lenapehoking Lodge"},
+                    { "value": "Lowwapaneu", "text": "Lowwapaneu Lodge"},
+                    { "value": "Na Tsi Hi", "text": "Na Tsi Hi Lodge"},
+                    { "value": "Unami", "text": "Unami Lodge"},
+                    { "value": "Witauchsoman", "text": "Witauchsoman Lodge"},
+                    { "value": "Woapalanne", "text": "Woapalanne Lodge"},
+                    { "value": "Yohaku", "text": "Yohaku Lodge"}
+                ]
+            },
+            {
+                "label": "Section E18",
+                "options": [
+                    { "value": "Abake Mi-Sa-Na-Ki", "text": "Abake Mi-Sa-Na-Ki Lodge"},
+                    { "value": "Achewon Netopalis", "text": "Achewon Netopalis Lodge"},
+                    { "value": "Buckskin", "text": "Buckskin Lodge"},
+                    { "value": "Catamount", "text": "Catamount Lodge"},
+                    { "value": "Kintecoying", "text": "Kintecoying Lodge"},
+                    { "value": "Ktemaque", "text": "Ktemaque Lodge"},
+                    { "value": "Madockawanda", "text": "Madockawanda Lodge"},
+                    { "value": "Pamola", "text": "Pamola Lodge"},
+                    { "value": "Passaconaway", "text": "Passaconaway Lodge"},
+                    { "value": "Pennacock", "text": "Pennacock Lodge"},
+                    { "value": "Shinnecock", "text": "Shinnecock Lodge"},
+                    { "value": "Tantamous", "text": "Tantamous Lodge"},
+                    { "value": "Tulpe", "text": "Tulpe Lodge"}
+                ]
+            },
+            {
+                "label": "Section E19",
+                "options": [
+                    { "value": "Half Moon", "text": "Half Moon Lodge"},
+                    { "value": "Nacha Nimat", "text": "Nacha Nimat Lodge"},
+                    { "value": "Owaneco", "text": "Owaneco Lodge"},
+                    { "value": "Paugassett", "text": "Paugassett Lodge"},
+                    { "value": "Pocumtuc", "text": "Pocumtuc Lodge"},
+                    { "value": "Tschitani", "text": "Tschitani Lodge"}
+                ]
+            }
+        ]
+    },
+    {
+        "label": "Gateway Region",
+        "children": [
+            {
+                "label": "Section G1",
+                "options": [
+                    { "value": "Atchafalaya", "text": "Atchafalaya Lodge"},
+                    { "value": "Chilantakoba", "text": "Chilantakoba Lodge"},
+                    { "value": "Comanche", "text": "Comanche Lodge"},
+                    { "value": "Quelqueshoe", "text": "Quelqueshoe Lodge"},
+                    { "value": "Quinipissa", "text": "Quinipissa Lodge"}
+                ]
+            },
+            {
+                "label": "Section G2",
+                "options": [
+                    { "value": "Aina Topa Hutsi", "text": "Aina Topa Hutsi Lodge"},
+                    { "value": "Colonneh", "text": "Colonneh Lodge"},
+                    { "value": "Hasinai", "text": "Hasinai Lodge"},
+                    { "value": "Karankawa", "text": "Karankawa Lodge"},
+                    { "value": "Tatanka", "text": "Tatanka Lodge"},
+                    { "value": "Tonkawa", "text": "Tonkawa Lodge"},
+                    { "value": "Wahinkto", "text": "Wahinkto Lodge"},
+                    { "value": "Wewanoma", "text": "Wewanoma Lodge"},
+                    { "value": "Wihinipa Hinsa", "text": "Wihinipa Hinsa Lodge"}
+                ]
+            },
+            {
+                "label": "Section G3",
+                "options": [
+                    { "value": "Akela Wahinapay", "text": "Akela Wahinapay Lodge"},
+                    { "value": "Caddo", "text": "Caddo Lodge"},
+                    { "value": "Mikanakawa", "text": "Mikanakawa Lodge"},
+                    { "value": "Nakona", "text": "Nakona Lodge"},
+                    { "value": "Nischa Achowalogen", "text": "Nischa Achowalogen Lodge"},
+                    { "value": "Netopalis Sipo Schipinachk", "text": "Netopalis Sipo Schipinachk Lodge"},
+                    { "value": "Penateka", "text": "Penateka Lodge"},
+                    { "value": "Tejas", "text": "Tejas Lodge"},
+                    { "value": "Wichita", "text": "Wichita Lodge"}
+                ]
+            },
+            {
+                "label": "Section G4",
+                "options": [
+                    { "value": "Abooikpaagun", "text": "Abooikpaagun Lodge"},
+                    { "value": "Ema'o Mahpe", "text": "Ema'o Mahpe Lodge"},
+                    { "value": "Ma-Nu", "text": "Ma-Nu Lodge"},
+                    { "value": "Quapaw", "text": "Quapaw Lodge"},
+                    { "value": "Ta Tsu Hwa", "text": "Ta Tsu Hwa Lodge"},
+                    { "value": "Washita", "text": "Washita Lodge"},
+                    { "value": "Wachtschu Mawachpo", "text": "Wachtschu Mawachpo Lodge"},
+                    { "value": "Wisawanik", "text": "Wisawanik Lodge"}
+                ]
+            },
+            {
+                "label": "Section G5",
+                "options": [
+                    { "value": "Golden Sun", "text": "Golden Sun Lodge"},
+                    { "value": "Kansa", "text": "Kansa Lodge"},
+                    { "value": "Kidi Kidish", "text": "Kidi Kidish Lodge"},
+                    { "value": "Kit-Ke-Hak-O-Kut", "text": "Kit-Ke-Hak-O-Kut Lodge"},
+                    { "value": "Mandan", "text": "Mandan Lodge"},
+                    { "value": "O-Ni-Flo", "text": "O-Ni-Flo Lodge"},
+                    { "value": "Tatanka Anpetu-Wi", "text": "Tatanka Anpetu-Wi Lodge"}
+                ]
+            },
+            {
+                "label": "Section G6",
+                "options": [
+                    { "value": "Dzie-Hauk Tonga", "text": "Dzie-Hauk Tonga Lodge"},
+                    { "value": "Mitigwa", "text": "Mitigwa Lodge"},
+                    { "value": "Nampa-Tsi", "text": "Nampa-Tsi Lodge"},
+                    { "value": "Tamegonit", "text": "Tamegonit Lodge"},
+                    { "value": "Wah-Sha-She", "text": "Wah-Sha-She Lodge"}
+                ]
+            },
+            {
+                "label": "Section G7",
+                "options": [
+                    { "value": "Anpetu-We", "text": "Anpetu-We Lodge"},
+                    { "value": "Black Hawk", "text": "Black Hawk Lodge"},
+                    { "value": "Illinek", "text": "Illinek Lodge"},
+                    { "value": "Illini", "text": "Illini Lodge"},
+                    { "value": "Nisha Kittan", "text": "Nisha Kittan Lodge"},
+                    { "value": "Shawnee", "text": "Shawnee Lodge"},
+                    { "value": "Woapink", "text": "Woapink Lodge"}
+                ]
+            },
+            {
+                "label": "Section G8",
+                "options": [
+                    { "value": "Cho-Gun-Mun-A-Nock", "text": "Cho-Gun-Mun-A-Nock Lodge"},
+                    { "value": "Konepaka Ketiwa", "text": "Konepaka Ketiwa Lodge"},
+                    { "value": "Sac-N-Fox", "text": "Sac-N-Fox Lodge"},
+                    { "value": "Timmeu", "text": "Timmeu Lodge"},
+                    { "value": "Wenasa Quenhotan", "text": "Wenasa Quenhotan Lodge"}
+                ]
+            },
+            {
+                "label": "Section G9",
+                "options": [
+                    { "value": "Bigfoot", "text": "Bigfoot Lodge"},
+                    { "value": "Kanwa Tho", "text": "Kanwa Tho Lodge"},
+                    { "value": "Lowaneu Allanque", "text": "Lowaneu Allanque Lodge"},
+                    { "value": "Ma-Ka-Ja-Wan", "text": "Ma-Ka-Ja-Wan Lodge"},
+                    { "value": "Takhone", "text": "Takhone Lodge"},
+                    { "value": "Wag-O-Shag", "text": "Wag-O-Shag Lodge"},
+                    { "value": "Waupecan", "text": "Waupecan Lodge"},
+                    { "value": "Wulapeju", "text": "Wulapeju Lodge"}
+                ]
+            },
+            {
+                "label": "Section G10",
+                "options": [
+                    { "value": "Blue Ox", "text": "Blue Ox Lodge"},
+                    { "value": "Kon Wapos", "text": "Kon Wapos Lodge"},
+                    { "value": "Ni-Sanak-Tani", "text": "Ni-Sanak-Tani Lodge"},
+                    { "value": "Otyokwa", "text": "Otyokwa Lodge"},
+                    { "value": "Tom Kita Chara", "text": "Tom Kita Chara Lodge"}
+                ]
+            },
+            {
+                "label": "Section G11",
+                "options": [
+                    { "value": "Crazy Horse", "text": "Crazy Horse Lodge"},
+                    { "value": "Ka'Niss Ma'Ingan", "text": "Ka'Niss Ma'Ingan Lodge"},
+                    { "value": "Nagununabe", "text": "Nagununabe Lodge"},
+                    { "value": "Pa-Hin", "text": "Pa-Hin Lodge"},
+                    { "value": "Tetonwana", "text": "Tetonwana Lodge"},
+                    { "value": "Totanhan Nakaha", "text": "Totanhan Nakaha Lodge"},
+                    { "value": "Wahpekute", "text": "Wahpekute Lodge"}
+                ]
+            },
+            {
+                "label": "Section G12",
+                "options": [
+                    { "value": "Apoxky Aio", "text": "Apoxky Aio Lodge"},
+                    { "value": "Buffalo Mountain", "text": "Buffalo Mountain Lodge"},
+                    { "value": "Gila", "text": "Gila Lodge"},
+                    { "value": "Kola", "text": "Kola Lodge"},
+                    { "value": "Kwahadi", "text": "Kwahadi Lodge"},
+                    { "value": "Tahosa", "text": "Tahosa Lodge"},
+                    { "value": "Tatokainyanka", "text": "Tatokainyanka Lodge"},
+                    { "value": "Yah-Tah-Hey-Si-Kess", "text": "Yah-Tah-Hey-Si-Kess Lodge"}
+                ]
+            },
+            {
+                "label": "Section G13",
+                "options": [
+                    { "value": "Nebagamon", "text": "Nebagamon Lodge"},
+                    { "value": "Papago", "text": "Papago Lodge"},
+                    { "value": "Tiwahe", "text": "Tiwahe Lodge"},
+                    { "value": "Wipala Wiki", "text": "Wipala Wiki Lodge"}
+                ]
+            },
+            {
+                "label": "Section G14",
+                "options": [
+                    { "value": "Ammatdiio", "text": "Ammatdiio Lodge"},
+                    { "value": "Es-Kaielgu", "text": "Es-Kaielgu Lodge"},
+                    { "value": "Shunkah Mahneetu", "text": "Shunkah Mahneetu Lodge"},
+                    { "value": "Tataliya", "text": "Tataliya Lodge"},
+                    { "value": "Tukarica", "text": "Tukarica Lodge"},
+                    { "value": "Walamootkin", "text": "Walamootkin Lodge"}
+                ]
+            },
+            {
+                "label": "Section G15",
+                "options": [
+                    { "value": "Nanuk", "text": "Nanuk Lodge"},
+                    { "value": "Nisqually", "text": "Nisqually Lodge"},
+                    { "value": "Sikhs Mox Lamonti", "text": "Sikhs Mox Lamonti Lodge"},
+                    { "value": "T'Kope Kwiskwis", "text": "T'Kope Kwiskwis Lodge"},
+                    { "value": "Toontuk", "text": "Toontuk Lodge"}
+                ]
+            },
+            {
+                "label": "Section G16",
+                "options": [
+                    { "value": "Lo La'Qam Geela", "text": "Lo La'Qam Geela Lodge"},
+                    { "value": "Tsisqan", "text": "Tsisqan Lodge"},
+                    { "value": "Wauna La-Mon'Tay", "text": "Wauna La-Mon'Tay Lodge"}
+                ]
+            },
+            {
+                "label": "Section G17",
+                "options": [
+                    { "value": "Amangi Nacha", "text": "Amangi Nacha Lodge"},
+                    { "value": "Hungteetsepoppi", "text": "Hungteetsepoppi Lodge"},
+                    { "value": "Ohlone", "text": "Ohlone Lodge"},
+                    { "value": "Orca", "text": "Orca Lodge"},
+                    { "value": "Saklan", "text": "Saklan Lodge"},
+                    { "value": "Tah-Heetch", "text": "Tah-Heetch Lodge"},
+                    { "value": "Talako", "text": "Talako Lodge"},
+                    { "value": "Tannu", "text": "Tannu Lodge"},
+                    { "value": "Toloma", "text": "Toloma Lodge"},
+                    { "value": "Yerba Buena", "text": "Yerba Buena Lodge"}
+                ]
+            },
+            {
+                "label": "Section G18",
+                "options": [
+                    { "value": "Cahuilla", "text": "Cahuilla Lodge"},
+                    { "value": "Chumash", "text": "Chumash Lodge"},
+                    { "value": "Malibu", "text": "Malibu Lodge"},
+                    { "value": "Puvunga", "text": "Puvunga Lodge"},
+                    { "value": "Spe-Le-Yai", "text": "Spe-Le-Yai Lodge"},
+                    { "value": "Tuku'ut", "text": "Tuku'ut Lodge"},
+                    { "value": "Topa Topa", "text": "Topa Topa Lodge"},
+                    { "value": "Wiatava", "text": "Wiatava Lodge"},
+                    { "value": "Yowlumne", "text": "Yowlumne Lodge"}
+                ]
+            },
+            {
+                "label": "Section G19",
+                "options": [
+                    { "value": "Achpateuny", "text": "Achpateuny Lodge"},
+                    { "value": "Na Mokupuni O Lawelawe", "text": "Na Mokupuni O Lawelawe Lodge"}
+                ]
+            }
+        ]
+    }
+]

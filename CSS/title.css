@@ -35,7 +35,6 @@ body, html, main, section {
     height: auto;
     max-width: 100%;
     position: absolute;
-    top: -50%;
     left: 0;
 }
 
@@ -119,8 +118,6 @@ button:hover {
 .submission {
     padding: 10px;
     background-color: transparent;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 2;
 }
 
@@ -136,7 +133,7 @@ button:hover {
     margin-bottom: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 24px;
     font-size: 15px;
 }
 
@@ -145,10 +142,21 @@ button:hover {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 24px;
     cursor: pointer;
 }
 
 .submission button:hover {
     background-color: #45a049;
+}
+
+#lodge {
+    width: 100%;
+}
+.nested-group-label {
+    font-weight: bold;
+    padding-left: 10px;
+}
+.nested-group-option {
+    padding-left: 20px;
 }

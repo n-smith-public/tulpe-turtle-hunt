@@ -15,19 +15,23 @@
             <div class="contentContainer">
                 <h1 class="titleText">Welcome!</h1>
                 <div class="introText">
-                    <p>Hello! You have reached turtle.greenbueller.com!</p>
-                    <p>Please wait for the rest of the website to be finished!</p>
-                    <br><br>
+                    <p>Hello! You have reached <b><a href="https://turtle.greenbueller.com">turtle.greenbueller.com!</a></b></p>
+                    <p>This is an experiment being conducted at <a href="https://noac2024.oa-bsa.org/">NOAC 2024</a> in Boulder,</p>
+                    <p>Colorado. The experiment is where there are small turtle clips left</p>
+                    <p>around NOAC, and you found one! If you are interested, please</p>
+                    <p>click continue and put in some of your information. Please note that</p>
+                    <p> only first name is required. I am not going to sell any of the data, </p>
+                    <p>this is only for me to see who finds the turtles. All data is kept </p>
+                    <p>securely on a remote server that only I have access to.</p>
+                    <br>
+                    <p>All I ask is that after you find one you go and rehide it.</p>
                     <div id ="rowCountContainer">
                         <h2>Turtles Found So Far: </h2>
                         <p id="rowCount"></p>
                     </div>
-                    <br> <br>
+                    <br>
                     <form>
                         <button type="button" onclick="moveToSubmissionPage()">
-                            <span class="sign-in-logo">
-                                <img src="Media/signIn.svg" alt="Google Logo">
-                            </span>
                             Continue
                         </button>
                     </form>
@@ -38,7 +42,7 @@
                     </script>
                 </div>
             </div>
-            
+
             <script>
                 async function fetchRowCount() {
                     try {

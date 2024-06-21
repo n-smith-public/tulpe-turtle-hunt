@@ -21,10 +21,8 @@ function adjustLayoutForDevice() {
     }
 }
 
-// Execute the adjustLayoutForDevice function when the page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Adjusts sizes  if on mobile
     adjustLayoutForDevice();
-
-    // Optionally, you can also listen for window resize events to adjust layout dynamically
     window.addEventListener('resize', adjustLayoutForDevice);
 });

@@ -1,8 +1,7 @@
 function isMobileDevice() {
     const details = navigator.userAgent;
     const regexp = /android|iphone|kindle|ipad/i;
-    let isMobileDevice = regexp.test(details);
-    return isMobileDevice;
+    return regexp.test(details);
 }
 
 // Function to adjust layout based on device type

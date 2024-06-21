@@ -127,6 +127,17 @@ const pool = mysql.createPool({
   port: process.env.PORT || 3306,
 });
 
+const validateSQLCall = (value) => {
+    const sqlRegex =/(\bdrop\b|\bdelete\b|\btruncate\b|\binsert\b|\bupdate\b|\bselect\b|\bunion\b|\bwhere\b|\bfrom\b|\blike\b|\binto\b|\bexec\b|\bcreate\b|\bprocedure\b|\bexecute\b)/i;
+    if (sqlRegex.test(value)) {
+        console.error('SQL injection attempt found: ', value);
+        const error = new Error('Input contained restricted keywords.');
+        error.status = 406;
+        throw error;
+    }
+    return true;
+}
+
 app.get('/userData/count', async (req, res) => {
     try {
         const query = 'SELECT COUNT(*) AS count FROM userData';
@@ -150,35 +161,51 @@ app.get('/userData/count', async (req, res) => {
 });
 
 app.post('/submit-data', [
-    body('firstName').notEmpty().withMessage('First name is required field.'),
-    body('email').isEmail().withMessage('A valid email address is required.')
+    body('firstName').isLength({ max: 40 }).notEmpty().withMessage('First name is required field and must be less than 40 characters.').custom(validateSQLCall),
+    body('lastName').optional({ checkFalsy: true }).isLength({ max: 40 }).withMessage('Last name must be less than 40 characters.').custom(validateSQLCall),
+    body('pronouns').optional({ checkFalsy: true }).isLength({ max: 40 }).withMessage('Pronouns must be less than 15 characters').custom(validateSQLCall),
+    body('lodge').optional({ checkFalsy: true }).isLength({ max: 40 }).withMessage('Lodge must be less than 40 characters').custom(validateSQLCall),
+    body('email').optional({ checkFalsy: true  }).isEmail().withMessage('Email address must be of a valid form.')
+        .isLength({ max: 50 }).withMessage('Email must be less than 50 characters').custom(validateSQLCall),
+    body('discord').optional({ checkFalsy: true }).isLength({ max: 32 }).withMessage('Discord username must be less than 32 characters').custom(validateSQLCall),
+    body('comments').optional({ checkFalsy: true }).isLength({ max: 1000 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
+    body('deviceType').isIn(['mobile', 'computer']).withMessage('Device type must be either mobile or computer.')
 ], (req, res) => {
-    const { firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
+    try {
+        const { deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
 
     /*if (!req.isAuthenticated()) {
         res.status(400).send('Unauthorized.');
         return;
     }*/
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ 
-            message: 'Validation of responses failed.', 
-            errors: errors.array().map(err => err.msg) 
-        });
-    }
-
-    const sql = 'INSERT INTO userData (firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const values = [firstName, lastName, pronouns, lodge, email, discord, comments];
-
-    pool.query(sql, values, (error, results) => {
-        if (error) {
-            console.error('Error inserting data:', error);
-            return res.status(500).send({ error: 'Error inserting data' });
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ 
+                message: 'Validation of responses failed.', 
+                errors: errors.array().map(err => err.msg) 
+            });
         }
-        console.log('Data inserted successfully: ', results);
-        res.status(200).json({ message: 'Data submitted successfully!' });
-    });
+
+        const sql = 'INSERT INTO userData (deviceType, firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [deviceType, firstName, lastName, pronouns, lodge, email, discord, comments];
+
+        pool.query(sql, values, (error, results) => {
+            if (error) {
+                console.error('Error inserting data:', error);
+                return res.status(500).send({ error: 'Error inserting data' });
+            }
+            console.log('Data inserted successfully: ', results);
+            res.status(200).json({ message: 'Data submitted successfully!' });
+        });
+    } catch (err) {
+        console.error('Error processing request: ', err.message);
+        if (err.message === 'Input contained restricted keywords.') {
+            res.status(406).json({ error: 'Invalid data entry, attempted SQL injection possible.'});
+        } else {
+            res.status(500).json({ error: 'Internal server error.'});
+        }
+    }
 });
 
 app.listen(port, () => {

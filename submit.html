@@ -18,7 +18,7 @@
 
                     <div class="submission">
                         <form id="dataForm">
-                            <label for="firstName">First Name:</label>
+                            <label for="firstName">* First Name:</label>
                             <input type="text" id="firstName" name="firstName" required>
                             <label for="lastName">Last Name:</label>
                             <input type="text" id="lastName" name="lastName">
@@ -27,7 +27,7 @@
                             <label for="lodge">Lodge:</label>
                             <input type="text" id="lodge" name="lodge">
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email">
                             <label for="discord">Discord:</label>
                             <input type="text" id="discord" name="discord">
                             <label for="comments">Comments:</label>
@@ -40,6 +40,12 @@
        </div>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
+            function getDeviceType() {
+                const details = navigator.userAgent;
+                const regexp = /android|iphone|kindle|ipad/i;
+                return regexp.test(details) ? "mobile" : "computer";
+            }
+
             function submitFormData(formData) {
                 fetch('/auth/status')
                     .then(response => response.json())
@@ -76,6 +82,8 @@
             }
 
             function submitDataNoAuth(formData) {
+                formData.deviceType = getDeviceType();
+
                 fetch('/submit-data', {
                     method: 'POST',
                     headers: {
@@ -84,24 +92,39 @@
                     body: JSON.stringify(formData),
                 })
                 .then(response => {
-                    return response.json().then(data => ({ status: response.status, body: data }));
-                })
-                .then(({ status, body }) => {
-                    if ( status !== 200) {
-                        if (body.errors) {
-                            throw new Error('Failed to submit data: ${body.errors.join(', ')}')
-                        } else {
-                            throw new Error ('Failed to submit data: ${body.message}')
+                    if (!response.ok) {
+                        if (response.status === 406) {
+                            throw new Error('Validation error: Input could not be validated properly,');
                         }
+                        throw new Error('Failed to submit data.');
                     }
-                    swal("Success!", "Your data has been successfully submitted. Have a great day!", "success")
+                    return response.json();
+                })
+                .then(data => {
+                    swal({
+                        title: "Success!",
+                        icon: "success", 
+                        text: "Your data has been successfully submitted. Have a great day!"
+                    })
                     .then(function() {
                         window.location.href='/index.html';
                     });
                 })
                 .catch(error => {
                     console.error('Error submitting data: ', error);
-                    alert('There was an error submitting data. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
+                    if (error.message.includes('Validation error')) {
+                        swal({
+                            title: "Error",
+                            icon: "error",
+                            text: "Your input could not be validated properly. Please check it and try again later. \n\n If this issue persists, contact greenbueller@greenbueller.com"
+                        });
+                    } else {
+                        swal({
+                            title:"Error", 
+                            icon: "error",
+                            text: "There was an error submitting data. Please try again later. \n\n If the issue persists, contact greenbueller@greenbueller.com"
+                        });
+                    }
                 });
             }
 
@@ -133,6 +156,8 @@
                     discord: document.getElementById('discord').value,
                     comments: document.getElementById('comments').value,
                 };
+
+                formData.deviceTypes = getDeviceType();
         
                 checkDatabaseConnection();
                 submitDataNoAuth(formData);

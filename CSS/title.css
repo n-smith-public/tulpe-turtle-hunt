@@ -51,7 +51,7 @@ body, html, main, section {
     position: relative;
     text-align: center;
     color: wheat;
-    max-width: 28%;
+    max-width: 80%;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -79,7 +79,7 @@ button:hover {
 
 .introText {
     font-size: 15px;
-    line-height: 2;
+    line-height: 1.6;
     margin-bottom: 40px;
 }
 

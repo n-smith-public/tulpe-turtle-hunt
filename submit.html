@@ -53,43 +53,23 @@
         <script>
             function getDeviceType() {
                 const details = navigator.userAgent;
-                const regexp = /android|iphone|kindle|ipad/i;
-                return regexp.test(details) ? "mobile" : "computer";
-            }
+                const android = /android/i;
+                const apple = /iphone|ipad/i;
+                const computer = /windows|mac|linux/i;
 
-            function submitFormData(formData) {
-                fetch('/auth/status')
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.loggedIn) {
-                            fetch('/submit-data', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(formData),
-                            })
-                            .then(response => {
-                                if(!response.ok) {
-                                    throw new Error('Failed to submit data.')
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                showSuccessAlert(data.message);
-                            })
-                            .catch(error => {
-                                console.error('Error submitting data: ', error);
-                                alert('There was an error submitting data. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
-                            });
-                        } else {
-                            alert('You are not authenticated. Please log in first.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error checking authentication status: ', error);
-                        alert('There was an error with the authentication system. Please try again later. If the issue persists, contact greenbueller@greenbueller.com');
-                    });
+                if (android.test(details)) {
+                    console.log("Using an Android");
+                    return "Android";
+                } else if (apple.test(details)) {
+                    console.log("Using an Apple");
+                    return "iOS";
+                } else if (computer.test(details)) {
+                    console.log("Using a Computer");
+                    return "Computer";
+                } else {
+                    console.log("Using Other");
+                    return "Other";
+                }
             }
 
             function submitDataNoAuth(formData) {
@@ -118,7 +98,7 @@
                         text: "Your data has been successfully submitted. Have a great day! \n\nPlease go and hide your turtle for another person to find it!"
                     })
                     .then(function() {
-                        window.location.href='/index.html';
+                        window.location.href='/';
                     });
                 })
                 .catch(error => {

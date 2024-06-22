@@ -1,7 +1,5 @@
 const express = require('express');
 const mysql = require('mysql');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const { body, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
@@ -10,6 +8,7 @@ const path = require('path');
 const swal = require('sweetalert');
 const redis = require('ioredis');
 const RedisStore = require('connect-redis').default;
+const modRewrite = require ( 'connect-modrewrite' );
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,7 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const redisClient = redis.createClient({
     host: process.env.DB_CACHE_ENDPOINT,
     port: 19549,
-    password: process.env.DB_CACHE_PASSWORD
+    password: process.env.DB_CACHE_PASSWORD,
+    retryStrategy(times) {
+        const delay = Math.min(times * 50, 2000);
+        return delay;
+    },
+    reconnectOnError(err) {
+        const targetError = 'READONLY';
+        if (err.message.includes(targetError)) {
+            return true;
+        }
+    },
+    connectTimeout: 30000
 })
 
 redisClient.on('error', (err) => {
@@ -41,27 +51,11 @@ app.use(session({
     }
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    scope: [ 'profile', 'email' ],
-},
-(accessToken, refreshToken, profile, done) => {
-    console.log('Google Strategy callback performed successfully.');
-    done(null, profile);
-}));
-
-passport.serializeUser((user,done) => {
-    done(null, user);
-});
-
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
-});
+app.use(modRewrite([
+    '^/$ /index.html [L]',
+    '^/submit$ /submit.html [L]',
+    '^/about$ /about.html [L]'
+]));
 
 app.use(express.static(path.join(__dirname)));
 app.use('/CSS', express.static(path.join(__dirname + '/CSS')));
@@ -75,34 +69,6 @@ app.get('/', (req, res) => {
 app.get('/submit', (req, res) => {
     res.sendFile(path.join(__dirname, 'submit.html'));
 })
-
-const isAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/auth/google');
-};
-
-app.get('/auth/google',
-    passport.authenticate('google', { scope: [ 'profile', 'email' ] })
-);
-
-app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
-        res.sendFile(path.join(__dirname, 'submit.html'));
-    }
-);
-
-app.get('/logout', (req, res) => {
-    req.logout(() => {
-        res.redirect('/');
-    });
-});
-
-app.get('/auth/status', (req, res) => {
-    res.send({ loggedIn: req.isAuthenticated() });
-});
 
 app.get('/keep-active', (req, res) => {
     res.status(200).send('Server active');
@@ -169,7 +135,7 @@ app.post('/submit-data', [
         .isLength({ max: 50 }).withMessage('Email must be less than 50 characters').custom(validateSQLCall),
     body('discord').optional({ checkFalsy: true }).isLength({ max: 32 }).withMessage('Discord username must be less than 32 characters').custom(validateSQLCall),
     body('comments').optional({ checkFalsy: true }).isLength({ max: 1000 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
-    body('deviceType').isIn(['mobile', 'computer']).withMessage('Device type must be either mobile or computer.')
+    body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.')
 ], (req, res) => {
     try {
         const { deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;

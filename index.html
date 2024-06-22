@@ -26,18 +26,26 @@
                     <br>
                     <p>All I ask is that after you find one you go and rehide it.</p>
                     <div id ="rowCountContainer">
-                        <h2>Turtles Found So Far: </h2>
-                        <p id="rowCount"></p>
+                        <h3>Turtles Found So Far: </h3>
+                        <h3 id="rowCount"></h3>
                     </div>
                     <br>
-                    <form>
-                        <button type="button" onclick="moveToSubmissionPage()">
-                            Continue
-                        </button>
-                    </form>
+                    <div class="buttonContainer">
+                        <form>
+                            <button type="button" onclick="moveToAbout()">
+                                About
+                            </button>
+                            <button type="button" onclick="moveToSubmissionPage()">
+                                Continue
+                            </button>
+                        </form>
+                    </div>
                     <script>
                         function moveToSubmissionPage() {
-                            window.location.href = '/submit.html';
+                            window.location.href = '/submit';
+                        }
+                        function moveToAbout() {
+                            window.location.href = '/about';
                         }
                     </script>
                 </div>
@@ -51,7 +59,7 @@
                             throw new Error('Failed to fetch row count');
                         }
                         const data = await response.json();
-                        document.getElementById('rowCount').textContent = data.count;
+                        document.getElementById('rowCount').textContent = data.count - 1;
                     } catch (error) {
                         console.error('Error fetching row count: ', error);
                     }

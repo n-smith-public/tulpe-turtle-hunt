@@ -325,6 +325,18 @@
     }
 }
 
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
 /* Main Page */
 
 body, html, main, section {
@@ -349,13 +361,17 @@ body, html, main, section {
 
 .foregroundContainer {
     position: relative;
-    width: 100%;
-    max-width: 1600px;
-    background-color: transparent;
+    width: 900%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(164, 164, 164, 0.7);
+    border: 2px solid rgba(207, 207, 207, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 20px auto;
 }
 
 .titleForeground {
@@ -379,7 +395,6 @@ body, html, main, section {
     position: relative;
     text-align: center;
     color: wheat;
-    max-width: 80%;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -431,6 +446,7 @@ body, html, main, section {
 a {
     color: #0077cc;
     text-decoration: none;
+    position: relative;
     transition: transform 0.3s ease;
 }
 
@@ -465,7 +481,7 @@ a:not(:hover)::after {
 }
 
 .introText {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.6;
     margin-bottom: 40px;
 }
@@ -526,4 +542,60 @@ a:not(:hover)::after {
 }
 .nested-group-option {
     padding-left: 20px;
+}
+
+.info-button {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    cursor: help;
+    position: relative;
+    margin-left: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.info-button::before,
+.info-button::after {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.info-button:hover::before,
+.info-button:hover::after {
+    opacity: 1;
+}
+
+/* Tooltip text */
+.info-button::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 12px;
+}
+
+/* Tooltip arrow */
+.info-button::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
 }

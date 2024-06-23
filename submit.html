@@ -6,7 +6,6 @@
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <script src="display-settings.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -15,7 +14,6 @@
     <body>
        <div class="titleBackground">
             <div class="foregroundContainer">
-                <img class="titleForegroundSubmit" src="/Media/foreground.png" alt="Foreground Image">
                 <div class="contentContainer">
                     <h1 class="titleText">Who Are You?</h1>
 
@@ -27,7 +25,9 @@
                             <input type="text" id="lastName" name="lastName" placeholder="Doe">
                             <label for="pronouns">Pronouns:</label>
                             <input type="text" id="pronouns" name="pronouns" placeholder="He/They">
-                            <label for="lodge">Lodge:</label>
+                            <label for="lodge">Lodge: 
+                                <span class="info-button" data-tooltip="If your lodge does not appear in this list, please select the closest one and put it in the Comments field.">i</span>
+                            </label>
                             <select id="lodge" name="lodge">
                                 <option value="" disabled selected>Select lodge...</option>
                             </select>

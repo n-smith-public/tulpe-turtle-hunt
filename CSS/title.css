@@ -1,4 +1,332 @@
-/* Main Sections */
+/* Animations */
+
+@keyframes gradientTransitionContinue {
+    0% {
+        background-color: #4285F4;
+        transform: scale(1.00);
+    }
+    10% {
+        background-color: #3F81EE;
+        transform: scale(1.02);
+    }
+    20% {
+        background-color: #3C7DE8;
+        transform: scale(1.04);
+    }
+    30% {
+        background-color: #3878E2;
+        transform: scale(1.06);
+    }
+    40% {
+        background-color: #3574DC;
+        transform: scale(1.08);
+    }
+    50% {
+        background-color: #3270D6;
+        transform: scale(1.10);
+    }
+    60% {
+        background-color: #2F6CD0;
+        transform: scale(1.10);
+    }
+    70% {
+        background-color: #2C68CA;
+        transform: scale(1.10);
+    }
+    80% {
+        background-color: #2863C4;
+        transform: scale(1.10);
+    }
+    90% {
+        background-color: #255FBE;
+        transform: scale(1.10);
+    }
+    100% {
+        background-color: #225BB8;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes reverseGradientTransitionContinue {
+    0% {
+        background-color: #225BB8;
+        transform: scale(1.10);
+    }
+    10% {
+        background-color: #255FBE;
+        transform: scale(1.08);
+    }
+    20% {
+        background-color: #2863C4;
+        transform: scale(1.06);
+    }
+    30% {
+        background-color: #2C68CA;
+        transform: scale(1.04);
+    }
+    40% {
+        background-color: #2F6CD0;
+        transform: scale(1.02);
+    }
+    50% {
+        background-color: #3270D6;
+        transform: scale(1.00);
+    }
+    60% {
+        background-color: #3574DC;
+    }
+    70% {
+        background-color: #3878E2;
+    }
+    80% {
+        background-color: #3C7DE8;
+    }
+    90% {
+        background-color: #3F81EE;
+    }
+    100% {
+        background-color: #4285F4;
+    }
+}
+
+@keyframes gradientTransitionAbout {
+    0% {
+        background-color: #E38FAD;
+        transform: scale(1.00);
+    }
+    10% {
+        background-color: #E18EAB;
+        transform: scale(1.02);
+    }
+    20% {
+        background-color: #DE8CA9;
+        transform: scale(1.04);
+    }
+    30% {
+        background-color: #DC8BA8;
+        transform: scale(1.06);
+    }
+    40% {
+        background-color: #DA89A6;
+        transform: scale(1.08);
+    }
+    50% {
+        background-color: #D888A4;
+        transform: scale(1.10);
+    }
+    60% {
+        background-color: #D586A2;
+        transform: scale(1.10);
+    }
+    70% {
+        background-color: #D385A0;
+        transform: scale(1.10);
+    }
+    80% {
+        background-color: #D1839F;
+        transform: scale(1.10);
+    }
+    90% {
+        background-color: #CE829D;
+        transform: scale(1.10);
+    }
+    100% {
+        background-color: #CC809B;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes reverseGradientTransitionAbout {
+    100% {
+        background-color: #E38FAD;
+    }
+    90% {
+        background-color: #E18EAB;
+    }
+    80% {
+        background-color: #DE8CA9;
+    }
+    70% {
+        background-color: #DC8BA8;
+    }
+    60% {
+        background-color: #DA89A6;
+    }
+    50% {
+        background-color: #D888A4;
+        transform: scale(1.00);
+    }
+    40% {
+        background-color: #D586A2;
+        transform: scale(1.02);
+    }
+    30% {
+        background-color: #D385A0;
+        transform: scale(1.04);
+    }
+    20% {
+        background-color: #D1839F;
+        transform: scale(1.06);
+    }
+    10% {
+        background-color: #CE829D;
+        transform: scale(1.08);
+    }
+    0% {
+        background-color: #CC809B;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes gradientTransitionSubmit {
+    0% {
+        background-color: #4CAF50;
+        transform: scale(1.00);
+    }
+    10% {
+        background-color: #4BAE4F;
+        transform: scale(1.02);
+    }
+    20% {
+        background-color: #4BAC4F;
+        transform: scale(1.04);
+    }
+    30% {
+        background-color: #4AAB4E;
+        transform: scale(1.06);
+    }
+    40% {
+        background-color: #49A94D;
+        transform: scale(1.08);
+    }
+    50% {
+        background-color: #49A84D;
+        transform: scale(1.10);
+    }
+    60% {
+        background-color: #48A64C;
+        transform: scale(1.10);
+    }
+    70% {
+        background-color: #47A54B;
+        transform: scale(1.10);
+    }
+    80% {
+        background-color: #46A34A;
+        transform: scale(1.10);
+    }
+    90% {
+        background-color: #46A24A;
+        transform: scale(1.10);
+    }
+    100% {
+        background-color: #45A049;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes reverseGradientTransitionSubmit {
+    100% {
+        background-color: #45A049;
+    }
+    90% {
+        background-color: #46A24A;
+    }
+    80% {
+        background-color: #46A34A;
+    }
+    70% {
+        background-color: #47A54B;
+    }
+    60% {
+        background-color: #48A64C;
+    }
+    50% {
+        background-color: #49A84D;
+        transform: scale(1.00);
+    }
+    40% {
+        background-color: #49A94D;
+        transform: scale(1.02);
+    }
+    30% {
+        background-color: #4AAB4E;
+        transform: scale(1.04);
+    }
+    20% {
+        background-color: #4BAC4F;
+        transform: scale(1.06);
+    }
+    10% {
+        background-color: #4BAE4F;
+        transform: scale(1.08);
+    }
+    0% {
+        background-color: #4CAF50;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes linkHoverEffect {
+    0% {
+        color: #0077cc;
+        transform: scale(1);
+        border-color: transparent;
+    }
+    10% {
+        color: #0088cc;
+        transform: scale(1.02);
+        border-color: #0088cc;
+    }
+    20% {
+        color: #0099cc;
+        transform: scale(1.04);
+        border-color: #0099cc;
+    }
+    30% {
+        color: #00aacc;
+        transform: scale(1.06);
+        border-color: #00aacc;
+    }
+    40% {
+        color: #00bbcc;
+        transform: scale(1.08);
+        border-color: #00bbcc;
+    }
+    50% {
+        color: #00cccc;
+        transform: scale(1.10);
+        border-color: #00cccc;
+    }
+    60% {
+        color: #00bbcc;
+        transform: scale(1.08);
+        border-color: #00bbcc;
+    }
+    70% {
+        color: #00aacc;
+        transform: scale(1.06);
+        border-color: #00aacc;
+    }
+    80% {
+        color: #0099cc;
+        transform: scale(1.04);
+        border-color: #0099cc;
+    }
+    90% {
+        color: #0088cc;
+        transform: scale(1.02);
+        border-color: #0088cc;
+    }
+    100% {
+        color: #0077cc;
+        transform: scale(1);
+        border-color: #0077cc;
+    }
+}
+
+/* Main Page */
+
 body, html, main, section {
     margin: 0;
     padding: 0;
@@ -55,8 +383,15 @@ body, html, main, section {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-button {
-    background-color: #4285F4;
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonContainer button {
+    margin: 0;
     color: white;
     padding: 6px 12px;
     border: none;
@@ -64,10 +399,62 @@ button {
     cursor: pointer;
     font-size: 18px;
     text-align: center;
+    transition: transform 0.3s ease;
 }
 
-button:hover {
-    background-color: #357AE8;
+.buttonContainer button:first-child {
+    background-color: #e38fad;
+    margin-right: 10px;
+}
+
+.buttonContainer button:first-child:hover {
+    animation: gradientTransitionAbout 1s forwards;
+}
+
+.buttonContainer button:first-child:not(:hover) {
+    animation: reverseGradientTransitionAbout 1s forwards;
+}
+
+.buttonContainer button:last-child {
+    background-color: #4285F4;
+    margin-left: 10px;
+}
+
+.buttonContainer button:last-child:hover {
+    animation: gradientTransitionContinue 1s forwards;
+}
+
+.buttonContainer button:last-child:not(:hover) {
+    animation: reverseGradientTransitionContinue 1s forwards;
+}
+
+a {
+    color: #0077cc;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+/* Hover animation */
+a:hover {
+    animation: linkHoverEffect 1s forwards;
+    border-bottom: 2px solid transparent;
+}
+
+a:hover::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3 ease;
+}
+
+a:not(:hover)::after {
+    width: 0;
+    opacity: 0;
 }
 
 /* Disclaimer Page */
@@ -81,42 +468,6 @@ button:hover {
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 40px;
-}
-
-@media (max-width: 768px) {
-    .titleText {
-        font-size: 24px;
-    }
-
-    .titleText.submit {
-        font-size: 24px;
-    }
-
-    .introText {
-        font-size: 14px;
-    }
-
-    .titleForeground {
-        max-width: 100%;
-    }
-}
-
-.sign-in-logo {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-}
-
-.buttonContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.buttonContainer button {
-    margin: 10px;
-    margin-top: 0;
-    margin-bottom: 0;
 }
 
 /* Submit Page */
@@ -159,7 +510,11 @@ button:hover {
 }
 
 .submission button:hover {
-    background-color: #45a049;
+    animation: gradientTransitionSubmit 1s forwards;
+}
+
+.submission button:not(:hover) {
+    animation: reverseGradientTransitionSubmit 1s forwards;
 }
 
 #lodge {

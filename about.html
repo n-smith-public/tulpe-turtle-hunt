@@ -24,11 +24,11 @@
             <p>This experiment was inspired by the Cruise Ship Ducks that some cruise lines have. For those unfamiliar, people will hide ducks around cruises they go on that say where they come from, and there's a whole community built around it.</p>
             <p>I got some turtles, the symbol of Tulpe Lodge, and decided to make this system. I want to learn more about who is attending NOAC, and I believe that the information that is gathered through this will be fun to look at.</p>
             <p>I've made an Instagram page for anyone interested in seeing some information about the results after NOAC concludes, as well as some pictures of people with their turtles if they decide to send them.</p>
-            <p>If you want to be posted on it, please send a DM to the account. The account handle is @</p>
+            <p>If you want to be posted on it, please send a DM to the account. The account handle is <a href="https://www.instagram.com/noac.turtles">@noac.turtles</a></p>
             <h2>Contact Me</h2>
             <p>If you want to ask me a question, send a comment, or otherwise reach out, you can do one of the following</p>
             <ul>
-                <li>Contact me at greenbueller@greenbueller.com</li>
+                <li>Contact me at <a href="mailto:greenbueller@greenbueller.com">greenbueller@greenbueller.com</a></li>
                 <li>DM the Instagram account listed above</li>
                 <li>Add me on discord @greenbueller</li>
             </ul>
@@ -43,6 +43,32 @@
             function goBack() {
                 window.location.href = '/';
             }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const options = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1 // Adjust threshold as needed
+                };
+        
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in-view');
+                            entry.target.classList.remove('out-of-view');
+                        } else {
+                            entry.target.classList.remove('in-view');
+                            entry.target.classList.add('out-of-view');
+                        }
+                    });
+                }, options);
+        
+                const elements = document.querySelectorAll('h1, h2, p, ul');
+                elements.forEach(element => {
+                    observer.observe(element);
+                });
+            });
         </script>
     </div>
 </body>

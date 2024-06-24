@@ -364,9 +364,9 @@ body, html, main, section {
     width: 90%;
     max-width: 600px;
     padding: 20px;
-    background-color: rgba(164, 164, 164);
-    border: 2px solid rgba(207, 207, 207);
-    box-shadow: 0 4px 8px rgba(0, 0, 0);
+    background-color: rgba(164, 164, 164, 0.7);
+    border: 2px solid rgba(207, 207, 207, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;

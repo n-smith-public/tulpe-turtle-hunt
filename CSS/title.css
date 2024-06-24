@@ -325,18 +325,6 @@
     }
 }
 
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
-}
-
 /* Main Page */
 
 body, html, main, section {
@@ -542,60 +530,4 @@ a:not(:hover)::after {
 }
 .nested-group-option {
     padding-left: 20px;
-}
-
-.info-button {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #007BFF;
-    color: white;
-    text-align: center;
-    line-height: 20px;
-    font-size: 14px;
-    cursor: help;
-    position: relative;
-    margin-left: 5px;
-    font-family: Arial, sans-serif;
-}
-
-.info-button::before,
-.info-button::after {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.info-button:hover::before,
-.info-button:hover::after {
-    opacity: 1;
-}
-
-/* Tooltip text */
-.info-button::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    white-space: nowrap;
-    z-index: 10;
-    font-size: 12px;
-}
-
-/* Tooltip arrow */
-.info-button::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: #333 transparent transparent transparent;
 }

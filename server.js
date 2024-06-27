@@ -86,6 +86,19 @@ app.get('/test-db', (req, res) => {
     })
 })
 
+const correctPassword = process.env.QUERY_PASSWORD;
+
+app.post('/verify-password', (req, res) => {
+    const { password } = req.body;
+    if (password === correctPassword) {
+        res.redirect('/queries');
+    }
+    else {
+        res.status(401).json({ error: 'Incorrect password' });
+    }
+})
+
+
 const pool = mysql.createPool({
   connectionLimit: 60000,
   host: process.env.DB_HOST,

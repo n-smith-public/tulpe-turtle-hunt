@@ -78,6 +78,45 @@
                         })
                     }
                 }
+
+                async function promptForPassword() {
+                    const password = prompt('Please enter the password:');
+                    if (password) {
+                    try {
+                        const response = await fetch('/verify-password', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ password }),
+                        });
+
+                        if (response.ok) {
+                            window.location.href = '/queries'; // Redirect to queries page if password is correct
+                        } else {
+                            const errorData = await response.json();
+                            swal({
+                                title: "Incorrect Password",
+                                icon: "warning", 
+                                text: "The password you entered was incorrect."
+                            })
+                        }
+                    } catch (error) {
+                        console.error('Error verifying password:', error);
+                        swal({
+                                title: "Password Validation Error",
+                                icon: "error", 
+                                text: "The password you entered could not be validated."
+                            })
+                    }
+                } else {
+                    swal({
+                                title: "Incorrect Password",
+                                icon: "warning", 
+                                text: "The password you entered was incorrect."
+                            })
+                }
+            }
             </script>
         </div>
     </div>

@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="CSS/title.css?newcache02">
+    <link rel="stylesheet" href="CSS/title.css?newcache03">
     <meta charset="utf-8">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
     <div class="titleBackground">
@@ -45,6 +46,10 @@
                 </div>
             </div>
 
+            <button id="dataPage" class="dataPage" onclick="promptForPassword()">
+                &#x1F511;
+            </button>
+
             <script>
                 async function fetchRowCount() {
                     try {
@@ -60,6 +65,19 @@
                 }
 
                 fetchRowCount();
+
+                function promptForPassword() {
+                    const password = prompt('Please enter the password:');
+                    if (password === 'Piggy123_456_789') { // Replace with your actual password
+                        window.location.href = '/queries'; // Redirect to the queries page
+                    } else {
+                        swal({
+                            title: "Incorrect Password",
+                            icon: "warning", 
+                            text: "The password you entered was incorrect."
+                        })
+                    }
+                }
             </script>
         </div>
     </div>

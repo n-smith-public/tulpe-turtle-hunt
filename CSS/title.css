@@ -486,6 +486,28 @@ a:not(:hover)::after {
     margin-bottom: 40px;
 }
 
+.lockButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.lockButton:hover {
+    background-color: #0056b3;
+}
+
 /* Submit Page */
 
 .titleText.submit {

@@ -9,6 +9,7 @@ const swal = require('sweetalert');
 const redis = require('ioredis');
 const RedisStore = require('connect-redis').default;
 const modRewrite = require ( 'connect-modrewrite' );
+const moment = require('moment');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -54,7 +55,8 @@ app.use(session({
 app.use(modRewrite([
     '^/$ /index.html [L]',
     '^/submit$ /submit.html [L]',
-    '^/about$ /about.html [L]'
+    '^/about$ /about.html [L]',
+    '^/queries$ /data.html [L]'
 ]));
 
 app.use(express.static(path.join(__dirname)));
@@ -173,6 +175,108 @@ app.post('/submit-data', [
         }
     }
 });
+
+app.get('/query-device-data', (req, res) => {
+    const query = `
+        SELECT deviceType AS 'Device Data', count(deviceType) AS 'Count'
+        FROM userData
+        WHERE deviceType IS NOT NULL AND deviceType != ''
+        GROUP BY deviceType
+        `;
+    
+        pool.query(query, (error, results) => {
+            if (error) {
+                res.status(500).send(error);
+                return;
+            }
+            res.json(results);
+        });
+});
+
+app.get('/query-lodge-data', (req, res) => {
+    pool.query(
+        'SELECT lodge AS \'Lodge\', count(lodge) AS \'Count\' FROM userData WHERE lodge IS NOT NULL AND lodge != \'\' GROUP BY lodge',
+        (error, results) => {
+            if (error) {
+                console.error('Error fetching lodge data:', error);
+                res.status(500).json({ error: 'Failed to fetch lodge data' });
+                return;
+            }
+            res.json(results);
+        }
+    );
+});
+
+app.get('/query-pronouns-data', (req, res) => {
+    pool.query(
+        'SELECT pronouns AS \'Pronouns\', count(pronouns) AS \'Count\' FROM userData WHERE pronouns IS NOT NULL AND pronouns != \'\' GROUP BY pronouns',
+        (error, results) => {
+            if (error) {
+                console.error('Error fetching pronouns data:', error);
+                res.status(500).json({ error: 'Failed to fetch pronouns data' });
+                return;
+            }
+            res.json(results);
+        }
+    );
+});
+
+app.get('/query-people-count-by-date', (req, res) => {
+    const query = `
+        SELECT creation_date AS Date, COUNT(*) AS Count
+        FROM userData
+        GROUP BY creation_date
+        ORDER BY creation_date
+    `;
+    
+    pool.query(query, (error, results) => {
+        if (error) {
+            console.error('Error fetching people count by date:', error);
+            res.status(500).json({ error: 'Failed to fetch people count by date' });
+            return;
+        }
+
+        // Calculate cumulative counts
+        let cumulativeCount = 0;
+        const dataWithCumulative = results.map(entry => {
+            cumulativeCount += entry.Count;
+            return {
+                Date: moment(entry.Date).format('YYYY-MM-DD'), // Format date if needed
+                
+                Count: cumulativeCount
+            };
+        });
+
+        res.json(dataWithCumulative);
+    });
+});
+
+app.get('/query-all-user-data', (req, res) => {
+    const query = `
+        SELECT 
+            userID AS 'User ID', 
+            DATE_FORMAT(creation_date, '%Y-%m-%d, %H:%i') AS 'Creation Date', 
+            deviceType AS 'Device Type', 
+            firstName AS 'First Name', 
+            lastName AS 'Last Name', 
+            pronouns AS 'Pronouns', 
+            lodge AS 'Lodge', 
+            email AS 'Email', 
+            discord AS 'Discord', 
+            comments AS 'Comments'
+        FROM userData
+        ORDER BY creation_date;
+    `;
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            console.error('Error fetching user data: ', error);
+            res.status(500).json({ error: 'Failed to fetch user data. '});
+            return;
+        }
+        res.json(results);
+    })
+})
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

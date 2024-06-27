@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Dashboard</title>
+    <link rel="stylesheet" href="CSS/data.css">
+</head>
+<body>
+    <div class="container">
+        <div id="showFullData" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="data-table">
+                <h2>Data Entries</h2>
+                <table id="userDataTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Creation Date</th>
+                            <th>Device Type</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Pronouns</th>
+                            <th>Lodge</th>
+                            <th>Email</th>
+                            <th>Discord</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be dynamically populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <button id="openbtn" class="openbtn" onclick="openNav()">&#11106;</button>
+        
+        <div class="content-container">
+            <div class="top-half">
+                <div class="line-chart-container">
+                    <h2>Ducks Found</h2>
+                    <canvas id="line-chart"></canvas>
+                </div>
+                <div class="lodge-chart-container">
+                    <h2>Lodge Distribution</h2>
+                    <canvas id="lodge-chart"></canvas>
+                </div>
+            </div>
+
+            <div class="bottom-half">
+                <div class="pie-chart-container">
+                    <h2>Pronoun Distribution</h2>
+                    <canvas id="pronouns-chart"></canvas>
+                </div>
+                <div class="pie-chart-container">
+                    <h2>Device Distribution</h2>
+                    <canvas id="device-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="refresh-button">Refresh Data</button>
+            <button id="return" onclick="returnStart()">Return</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="chartScripts.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("showFullData").style.width = "100%";
+            document.getElementById("openbtn").style.display = "none";
+        }
+
+        function closeNav() {
+            document.getElementById("showFullData").style.width = "0";
+            document.getElementById("openbtn").style.display = "block";
+        }
+        
+        function returnStart() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+
+</html>

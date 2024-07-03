@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Dashboard</title>
     <link rel="stylesheet" href="CSS/data.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="chartScripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/colResizable/1.6.0/colResizable.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -32,6 +38,7 @@
                     </tbody>
                 </table>
             </div>
+            <button id="deleteButton" class="deletebtn" onclick="sendConfirmationCode()">Purge Data</button>
         </div>
 
         <button id="openbtn" class="openbtn" onclick="openNav()">&#11106;</button>
@@ -39,7 +46,7 @@
         <div class="content-container">
             <div class="top-half">
                 <div class="line-chart-container">
-                    <h2>Ducks Found</h2>
+                    <h2>Turtles Found</h2>
                     <canvas id="line-chart"></canvas>
                 </div>
                 <div class="lodge-chart-container">
@@ -65,11 +72,15 @@
             <button id="return" onclick="returnStart()">Return</button>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-    <script src="chartScripts.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#userDataTable').colResizable({
+                liveDrag: true,
+                gripInnerHtml: "<div class='grip'></div>",
+                draggingClass: 'dragging'
+            });
+        });
+
         function openNav() {
             document.getElementById("showFullData").style.width = "100%";
             document.getElementById("openbtn").style.display = "none";
@@ -82,6 +93,63 @@
         
         function returnStart() {
             window.location.href = '/';
+        }
+
+        async function sendConfirmationCode() {
+            const confirmation = confirm("Are you sure you want to purge the data?");
+            if (!confirmation) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/send-confirmation-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const code = prompt("A confirmation code has been sent to the website administrator. Please enter the code:");
+                    if (!code) {
+                        alert("Confirmation code is required.");
+                        return;
+                    }
+                    verifyConfirmationCode(code);
+                } else {
+                    const errorData = await response.json();
+                    alert("Failed to send confirmation code: " + errorData.error);
+                }
+            } catch (error) {
+                console.error("Error sending confirmation code: ", error);
+                alert("An error occurred while sending confirmation code.");
+            }
+        }
+
+        async function verifyConfirmationCode(code) {
+            try {
+                const response = await fetch('/verify-confirmation-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ code: code })
+                });
+
+                if (response.ok) {
+                    swal({
+                        title: "Data Purged",
+                        icon: "success", 
+                        text: "The data has been purged successfully."
+                    })
+                } else {
+                    const errorData = await response.json();
+                    alert("Failed to delete data: " + errorData.error);
+                }
+            } catch (error) {
+                console.error("Error verifying confirmation code: ", error);
+                alert("An error occurred while verifying confirmation code.");
+            }
         }
     </script>
 </body>

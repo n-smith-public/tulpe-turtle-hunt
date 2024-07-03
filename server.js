@@ -5,11 +5,14 @@ const { body, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const path = require('path');
-const swal = require('sweetalert');
 const redis = require('ioredis');
 const RedisStore = require('connect-redis').default;
 const modRewrite = require ( 'connect-modrewrite' );
 const moment = require('moment');
+const nodemailer = require( 'nodemailer' );
+const crypto = require( 'crypto' );
+const fs = require( 'fs' );
+const { promisify } = require('util');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -52,6 +55,72 @@ app.use(session({
     }
 }));
 
+const ConfEmail = process.env.CONFIRMATION_EMAIL;
+const ConfPass = process.env.CONFIRMATION_PASSWORD;
+const transporter = nodemailer.createTransport({
+    service: 'Zoho',
+    port: 465,
+    secure: true,
+    auth: {
+        user: ConfEmail,
+        pass: ConfPass
+    },
+    tls: {
+        rejectUnAuthorized: true
+    }
+});
+
+let confirmationCode = '';
+let expiration = 0;
+
+const generateConfCode = () => {
+    confirmationCode = crypto.randomBytes(8).toString('hex');
+    expiration = moment().add(5, 'minutes').valueOf();
+    return { code: confirmationCode, expiration };
+}
+
+app.post('/send-confirmation-code', async (req, res) => {
+    try {
+        const { code, expiration } = generateConfCode();
+
+        const emailTemplate = fs.readFileSync(path.join(__dirname, 'confirmationCode.html'), 'utf8');
+        const emailContent = emailTemplate.replace('{{confirmationCode}}', code);
+
+        await transporter.sendMail({
+            from: 'Tulpe Turtle Hunt <greenbueller@greenbueller.com>',
+            to: 'pennygaming10@gmail.com',
+            subject: 'Confirmation Code for Data Purge',
+            html: emailContent,
+            text: 'Your confirmation code is: ', code
+        });
+        res.status(200).json({ message: 'Confirmation code sent successfully.' });
+    } catch(error) {
+        console.error('Error sending confirmation code: ', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/verify-confirmation-code', async (req, res) => {
+    const { code } = req.body;
+
+    if (code !== confirmationCode) {
+        return res.status(403).json({ error: 'Incorrect confirmation code' });
+    }
+
+    const currentTimestamp = moment().valueOf();
+    if (currentTimestamp > expiration) {
+        return res.status(400).json({ error: 'Confirmation code has expired.' });
+    }
+    try {
+        await promisify(pool.query).bind(pool)("DELETE FROM userData WHERE firstName <> 'Sample' AND lastName <> 'Data';");
+        confirmationCode = '';
+        res.status(200),json({ message: 'Data deleted successfully. '});
+    } catch(error) {
+        console.error('Error deleting data: ', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.use(modRewrite([
     '^/$ /index.html [L]',
     '^/submit$ /submit.html [L]',
@@ -72,31 +141,83 @@ app.get('/submit', (req, res) => {
     res.sendFile(path.join(__dirname, 'submit.html'));
 })
 
-app.get('/keep-active', (req, res) => {
-    res.status(200).send('Server active');
-})
-
-app.get('/test-db', (req, res) => {
-    pool.query('SELECT 1', (error, results) => {
-        if (error) {
-            console.error('A database connection error occured: ', error);
-            return res.status(500).send('Database connection error.');
-        }
-        res.send('Database connection successful.');
-    })
-})
-
 const correctPassword = process.env.QUERY_PASSWORD;
+const maxAttempts = 5;
+const attemptWindow = 300;
+const lockoutTime = 3600;
+const getAttemptsKey = (ip) => 'attempts:${ip}';
+const getLockoutKey = (ip) => 'lockout:${ip}';
 
-app.post('/verify-password', (req, res) => {
+app.post('/verify-password', async (req, res) => {
     const { password } = req.body;
-    if (password === correctPassword) {
-        res.redirect('/queries');
+    const ip = req.ip;
+
+    const lockoutKey = getLockoutKey(ip);
+    const attemptsKey = getAttemptsKey(ip);
+
+    try {
+        const isLockedOut = await redisClient.get(lockoutKey);
+        if (isLockedOut) {
+            return res.status(429).json({ error: 'Too many failed attempts. Please try again later.' });
+        }
+
+        if (password === correctPassword) {
+            await redisClient.del(attemptsKey);
+            res.redirect('/queries');
+        } else {
+            const attempts = await redisClient.incr(attemptsKey);
+            if (attempts === 1) {
+                await redisClient.expire(attemptsKey, attemptWindow);
+            }
+
+            if (attempts >= maxAttempts) {
+                await redisClient.set(lockoutKey, '1', 'EX', lockoutTime);
+                await redisClient.del(attemptsKey);
+                return res.status(429).json({ error: 'Too many failed attempts. Please try again later.' });
+            } else {
+                return res.status(401).json({ error: 'Incorrect password' });
+            }
+        }
+    } catch (error) {
+        console.error('Error validating password: ', error);
+        return res.status(500).json({ error: 'Internal server error.' });
     }
-    else {
-        res.status(401).json({ error: 'Incorrect password' });
+});
+
+if (process.env.NODE_ENV === 'development') {
+    app.post('/reset-attempts', async (req, res) => {
+        const ip = req.body.ip;
+    
+        try {
+            // Reset attempts logic here
+            await redisClient.del(`attempts:${ip}`);
+            console.log(`Attempts reset successfully for IP: ${ip}`);
+            res.status(200).json({ message: 'Attempts reset successfully.' });
+        } catch (error) {
+            console.error('Error resetting attempts: ', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+}
+
+app.get('/lockout-status', async (req, res) => {
+    const ip = req.ip;
+    const lockoutKey = getLockoutKey(ip);
+
+    try {
+        // Force fetch from Redis without cache
+        redisClient.get(lockoutKey, (err, isLockedOut) => {
+            if (err) {
+                console.error('Error checking lockout status:', err);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+            res.json({ lockedOut: !!isLockedOut });
+        });
+    } catch (error) {
+        console.error('Error checking lockout status:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-})
+});
 
 
 const pool = mysql.createPool({

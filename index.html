@@ -64,18 +64,19 @@
                     }
                 }
 
-                fetchRowCount();
-
-                function promptForPassword() {
-                    const password = prompt('Please enter the password:');
-                    if (password === 'Piggy123_456_789') { // Replace with your actual password
-                        window.location.href = '/queries'; // Redirect to the queries page
-                    } else {
-                        swal({
-                            title: "Incorrect Password",
-                            icon: "warning", 
-                            text: "The password you entered was incorrect."
-                        })
+                async function checkLockoutStatus() {
+                    try {
+                        const response = await fetch('/lockout-status');
+                        const data = await response.json();
+                        const lockButton = document.getElementById('dataPage');
+                        if (data.lockedOut) {
+                            lockButton.style.display = 'none';
+                        } else {
+                            lockButton.style.display = 'block';
+                        }
+                        console.log('Lockout status checked: ', data);
+                    } catch (error) {
+                        console.error('Error checking lockout status: ', error);
                     }
                 }
 
@@ -92,7 +93,15 @@
                         });
 
                         if (response.ok) {
-                            window.location.href = '/queries'; // Redirect to queries page if password is correct
+                            window.location.href = '/queries'; // Redirect to data dashbord if password is correct
+                        } else if (response.status === 429) {
+                            const errorData = await response.json();
+                            swal({
+                                icon: 'error',
+                                title: 'Too many attempts',
+                                text: errorData.error
+                            });
+                            document.getElementById('dataPage').style.display = 'none';
                         } else {
                             const errorData = await response.json();
                             swal({
@@ -104,19 +113,47 @@
                     } catch (error) {
                         console.error('Error verifying password:', error);
                         swal({
-                                title: "Password Validation Error",
-                                icon: "error", 
-                                text: "The password you entered could not be validated."
-                            })
+                            title: "Password Validation Error",
+                            icon: "error", 
+                            text: "The password you entered could not be validated."
+                        })
                     }
                 } else {
                     swal({
-                                title: "Incorrect Password",
-                                icon: "warning", 
-                                text: "The password you entered was incorrect."
-                            })
+                        title: "Incorrect Password",
+                        icon: "warning", 
+                        text: "The password you entered was incorrect."
+                    })
                 }
             }
+
+            async function resetAttempts() {
+                try {
+                    const response = await fetch('/reset-attempts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ip: '96.223.147.5' }) // Use actual IP or method to get IP
+                    });
+
+                    if (response.ok) {
+                        const results = await response.json();
+                        alert('Login attempts reset successfully.');
+                        checkLockoutStatus();
+                    } else {
+                        const errorData = await response.json();
+                        alert('Login attempts failed to reset: ' + errorData.error);
+                    }
+                } catch (error) {
+                    console.error('Error resetting attempts:', error);
+                    alert('An error occurred.');
+                }
+            }
+
+            fetchRowCount();
+            checkLockoutStatus();
+            setInterval(checkLockoutStatus, 60000);
             </script>
         </div>
     </div>

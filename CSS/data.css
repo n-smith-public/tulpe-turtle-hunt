@@ -1,3 +1,92 @@
+@keyframes gradientTransitionSubmit {
+    0% {
+        background-color: #4CAF50;
+        transform: scale(1.00);
+    }
+    10% {
+        background-color: #4BAE4F;
+        transform: scale(1.02);
+    }
+    20% {
+        background-color: #4BAC4F;
+        transform: scale(1.04);
+    }
+    30% {
+        background-color: #4AAB4E;
+        transform: scale(1.06);
+    }
+    40% {
+        background-color: #49A94D;
+        transform: scale(1.08);
+    }
+    50% {
+        background-color: #49A84D;
+        transform: scale(1.10);
+    }
+    60% {
+        background-color: #48A64C;
+        transform: scale(1.10);
+    }
+    70% {
+        background-color: #47A54B;
+        transform: scale(1.10);
+    }
+    80% {
+        background-color: #46A34A;
+        transform: scale(1.10);
+    }
+    90% {
+        background-color: #46A24A;
+        transform: scale(1.10);
+    }
+    100% {
+        background-color: #45A049;
+        transform: scale(1.10);
+    }
+}
+
+@keyframes reverseGradientTransitionSubmit {
+    100% {
+        background-color: #45A049;
+    }
+    90% {
+        background-color: #46A24A;
+    }
+    80% {
+        background-color: #46A34A;
+    }
+    70% {
+        background-color: #47A54B;
+    }
+    60% {
+        background-color: #48A64C;
+    }
+    50% {
+        background-color: #49A84D;
+        transform: scale(1.00);
+    }
+    40% {
+        background-color: #49A94D;
+        transform: scale(1.02);
+    }
+    30% {
+        background-color: #4AAB4E;
+        transform: scale(1.04);
+    }
+    20% {
+        background-color: #4BAC4F;
+        transform: scale(1.06);
+    }
+    10% {
+        background-color: #4BAE4F;
+        transform: scale(1.08);
+    }
+    0% {
+        background-color: #4CAF50;
+        transform: scale(1.10);
+    }
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #272727;
@@ -137,4 +226,21 @@ canvas {
 
 .data-table tbody {
     background-color: #f2f2f2;
+}
+
+.deletebtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.deletebtn:hover {
+    animation: gradientTransitionSubmit 1s forwards;
+}
+
+.deletebtn:not(:hover) {
+    animation: reverseGradientTransitionSubmit 1s forwards;
 }

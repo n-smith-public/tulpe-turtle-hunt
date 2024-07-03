@@ -13,6 +13,44 @@ const nodemailer = require( 'nodemailer' );
 const crypto = require( 'crypto' );
 const fs = require( 'fs' );
 const { promisify } = require('util');
+const consoleStamp = require('console-stamp');
+
+consoleStamp(console, {
+    format: ':date(yyyy.mm.dd HH:MM:ss.l)',
+    include: ['log', 'info', 'warn', 'error', 'debug'],
+    colors: {
+        stamp: 'yellow',
+        label: 'white'
+    },
+    metadata: 'green'
+});
+
+// Define custom label colors using chalk
+const labelColors = {
+    log: '[LOG]',
+    info: '[INFO]',
+    warn: '[WARN]',
+    error: '[ERROR]',
+    debug: '[DEBUG]'
+};
+
+// Override console methods with chalk colors
+overrideConsoleWithColors();
+
+async function overrideConsoleWithColors() {
+    const chalk = await import('chalk').then(mod => mod.default);
+
+    console.log = applyLabelColor(console.log, labelColors.log, chalk.blueBright);
+    console.info = applyLabelColor(console.info, labelColors.info, chalk.green);
+    console.warn = applyLabelColor(console.warn, labelColors.warn, chalk.yellow);
+    console.error = applyLabelColor(console.error, labelColors.error, chalk.red);
+    console.debug = applyLabelColor(console.debug, labelColors.debug, chalk.cyan);
+}
+
+function applyLabelColor(method, label, colorFunc) {
+    return (...args) => method(colorFunc(`${label} ${args.join(' ')}`));
+}
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +77,7 @@ const redisClient = redis.createClient({
 
 redisClient.on('error', (err) => {
     console.error('Redis error: ', err);
+    console.error(err.stack);
 })
 
 redisClient.on('connect', function() {

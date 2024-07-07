@@ -164,7 +164,8 @@ app.use(modRewrite([
     '^/$ /index.html [L]',
     '^/submit$ /submit.html [L]',
     '^/about$ /about.html [L]',
-    '^/queries$ /data.html [L]'
+    '^/queries$ /data.html [L]',
+    '^/log$ /devlog.html [L]'
 ]));
 
 app.use(express.static(path.join(__dirname)));

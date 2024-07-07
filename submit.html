@@ -77,6 +77,11 @@
                 }
             }
 
+            function successSFX() {
+                const audio = new Audio('Media/submitComplete.wav');
+                audio.play();
+            }
+
             function submitDataNoAuth(formData) {
                 formData.deviceType = getDeviceType();
 
@@ -97,10 +102,11 @@
                     return response.json();
                 })
                 .then(data => {
+                    successSFX();
                     swal({
                         title: "Success!",
                         icon: "success", 
-                        text: "Your data has been successfully submitted. Have a great day! \n\nPlease go and hide your turtle for another person to find it!"
+                        text: "Your data has been successfully submitted. Have a great day! \n\nTry to get someone else to scan the code as well!"
                     })
                     .then(function() {
                         window.location.href='/';
@@ -173,7 +179,7 @@
             }
 
             $(document).ready(function() {
-                $.getJSON('Lodges/lodges.json', function(data) {
+                $.getJSON('JSON/lodges.json', function(data) {
                     addNestedGroupsToSelect(data);
                 });
             });

@@ -35,11 +35,17 @@
         </div>
 
         <form>
+            <button type="button" onclick="goLog()">
+                Dev Log
+            </button>
             <button type="button" onclick="goBack()">
                 Return
             </button>
         </form>
         <script>
+            function goLog() {
+                window.location.href = '/log';
+            }
             function goBack() {
                 window.location.href = '/';
             }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Development Log</title>
+        <link rel="stylesheet" href="CSS/devlog.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <div class="contentContainer">
+            <h1>Development Log</h1>
+            <hr>
+    
+            <form>
+                <button type="button" onclick="goBack()">Home</button>
+            </form>
+            <div class="projects-container">
+                <!-- Cards order from newest first -->
+                <div class="project-card" onclick="openModal('First Turtles')">
+                    <h2 class="project-title">First Turtles</h2>
+                    <p class="project-description">06/07/24</p>
+                    <!-- The first physical turtles were made -->
+                </div>
+                <div class="project-card" onclick="openModal('Development Log')">
+                    <h2 class="project-title">Development Log</h2>
+                    <p class="project-description">04/07/24</p>
+                    <!-- Created the devlog to represent each stage of the project better. -->
+                </div>
+                <div class="project-card" onclick="openModal('Logging')">
+                    <h2 class="project-title">Logging</h2>
+                    <p class="project-description">03/07/24</p>
+                    <!-- Changed how I handle logging/errors within the Node.JS server so I can diagnose issues sooner -->
+                </div>
+                <div class="project-card" onclick="openModal('Data Dashboard')">
+                    <h2 class="project-title">Data Dashboard</h2>
+                    <p class="project-description">26/06/24</p>
+                    <!-- Created a way to visually represent the data, which I can now reveal as desired  -->
+                </div>
+                <div class="project-card" onclick="openModal('About Page',)">
+                    <h2 class="project-title">About Page</h2>
+                    <p class="project-description">22/06/24</p>
+                    <!-- Added the about page to further explain who I am and why this exists -->
+                </div>
+                <div class="project-card" onclick="openModal('Data Submission Enhancements')">
+                    <h2 class="project-title">Submission Enhancements</h2>
+                    <p class="project-description">20/06/24</p>
+                    <!-- Added additional verifications to data entry to protect your data -->
+                </div>
+                <div class="project-card" onclick="openModal('Mobile Formatting')">
+                    <h2 class="project-title">Mobile Formatting</h2>
+                    <p class="project-description">20/06/24</p>
+                    <!-- Getting it to look right on mobile, dropping the foreground image in favor of basic CSS instead -->
+                </div>
+                <div class="project-card" onclick="openModal('Data Submission')">
+                    <h2 class="project-title">Data Submission</h2>
+                    <p class="project-description">19/06/24</p>
+                    <!-- Getting the positioning right, the lodge dropdown -->
+                </div>
+                <div class="project-card" onclick="openModal('Disclaimer Page')">
+                    <h2 class="project-title">Disclaimer Page</h2>
+                    <p class="project-description">19/06/24</p>
+                    <!-- Background image, positioning was a bitch -->
+                </div>
+                <div class="project-card" onclick="openModal('Domains')">
+                    <h2 class="project-title">Domains</h2>
+                    <p class="project-description">17/06/24</p>
+                    <!-- Purchasing domain, setting it up -->
+                </div>
+                <div class="project-card" onclick="openModal('Initial Conception')">
+                    <h2 class="project-title">Initial Conception</h2>
+                    <p class="project-description">02/06/24</p>
+                    <!-- Pre-Project Ideas -->
+                </div>
+            </div>
+        </div>
+    
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-header" id="modalHeader"></div>
+                <div class="modal-body" id="modalBody"></div>
+            </div>
+        </div>
+    
+        <script>
+            function goBack() {
+                window.location.href = '/';
+            }
+    
+            async function fetchProjectDescriptions() {
+                try {
+                    const response = await fetch('JSON/devlog.json');
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching project descriptions:', error);
+                    return {};
+                }
+            }
+    
+            async function openModal(title) {
+                const projectDescriptions = await fetchProjectDescriptions();
+                const project = projectDescriptions[title];
+   
+                if (!project) {
+                    console.error(`Project '${title}' not found in JSON.`);
+                    return;
+                }
+
+                document.getElementById('modalHeader').innerText = title;
+                document.getElementById('modalBody').innerHTML = project.description;
+                document.getElementById('myModal').style.display = "flex";
+            }
+    
+            function closeModal() {
+                document.getElementById('myModal').style.display = "none";
+            }
+    
+            window.onclick = function(event) {
+                if (event.target == document.getElementById('myModal')) {
+                    document.getElementById('myModal').style.display = "none";
+                }
+            }
+    
+            document.addEventListener('DOMContentLoaded', () => {
+                const options = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1 // Adjust threshold as needed
+                };
+    
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in-view');
+                            entry.target.classList.remove('out-of-view');
+                        } else {
+                            entry.target.classList.remove('in-view');
+                            entry.target.classList.add('out-of-view');
+                        }
+                    });
+                }, options);
+    
+                const elements = document.querySelectorAll('h1, h2, p, ul');
+                elements.forEach(element => {
+                    observer.observe(element);
+                });
+            });
+        </script>
+    </body>
+    </html>

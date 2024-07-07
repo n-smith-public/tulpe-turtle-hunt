@@ -171,6 +171,7 @@ app.use(modRewrite([
 app.use(express.static(path.join(__dirname)));
 app.use('/CSS', express.static(path.join(__dirname + '/CSS')));
 app.use('/Media', express.static(path.join(__dirname + '/Media')));
+app.use('/JSON', express.static(path.join(__dirname + '/JSON')));
 
 
 app.get('/', (req, res) => {

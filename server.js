@@ -172,6 +172,9 @@ app.use(express.static(path.join(__dirname)));
 app.use('/CSS', express.static(path.join(__dirname + '/CSS')));
 app.use('/Media', (req, res, next) => {
     console.log('Serving Media:', req.url);
+    if (req.url.endsWith('.png')) {
+        res.set('Content-Type', 'image/png');
+    }
     next();
 }, express.static(path.join(__dirname, 'Media')));
 app.use('/JSON', express.static(path.join(__dirname + '/JSON')));

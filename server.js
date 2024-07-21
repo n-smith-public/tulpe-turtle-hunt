@@ -94,7 +94,7 @@ app.use(session({
     }
 }));
 
-app.use('/log', (req, res) => {
+app.use('/consoleMessage', (req, res) => {
     const { level, message } = req.body;
 
     switch(level) {
@@ -115,7 +115,7 @@ app.use('/log', (req, res) => {
     }
 
     res.status(200).send('Console message received');
-})
+});
 
 const ConfEmail = process.env.CONFIRMATION_EMAIL;
 const ConfPass = process.env.CONFIRMATION_PASSWORD;

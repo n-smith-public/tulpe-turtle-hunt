@@ -6,6 +6,7 @@
         <title>Development Log</title>
         <link rel="stylesheet" href="CSS/devlog.css">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="logging.js"></script>
     </head>
     <body>
         <div class="contentContainer">
@@ -17,6 +18,11 @@
             </form>
             <div class="projects-container">
                 <!-- Cards order from newest first -->
+                <div class="project-card" onclick="openModal('More Turtles')">
+                    <h2 class="project-title">More Turtles!</h2>
+                    <p class="project-description">21/07/24</p>
+                    <!-- The first physical turtles were made -->
+                </div>
                 <div class="project-card" onclick="openModal('First Turtles')">
                     <h2 class="project-title">First Turtles</h2>
                     <p class="project-description">06/07/24</p>
@@ -37,7 +43,7 @@
                     <p class="project-description">26/06/24</p>
                     <!-- Created a way to visually represent the data, which I can now reveal as desired  -->
                 </div>
-                <div class="project-card" onclick="openModal('About Page',)">
+                <div class="project-card" onclick="openModal('About Page')">
                     <h2 class="project-title">About Page</h2>
                     <p class="project-description">22/06/24</p>
                     <!-- Added the about page to further explain who I am and why this exists -->

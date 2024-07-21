@@ -94,6 +94,29 @@ app.use(session({
     }
 }));
 
+app.use('/log', (req, res) => {
+    const { level, message } = req.body;
+
+    switch(level) {
+        case 'info':
+            console.info(message);
+            break;
+        case 'warn':
+            console.warn(message);
+            break;
+        case 'error':
+            console.error(message);
+            break;
+        case 'debug':
+            console.debug(message);
+            break;
+        default:
+            console.log(message);
+    }
+
+    res.status(200).send('Console message received');
+})
+
 const ConfEmail = process.env.CONFIRMATION_EMAIL;
 const ConfPass = process.env.CONFIRMATION_PASSWORD;
 const transporter = nodemailer.createTransport({
@@ -317,7 +340,7 @@ app.post('/submit-data', [
     body('email').optional({ checkFalsy: true  }).isEmail().withMessage('Email address must be of a valid form.')
         .isLength({ max: 50 }).withMessage('Email must be less than 50 characters').custom(validateSQLCall),
     body('discord').optional({ checkFalsy: true }).isLength({ max: 32 }).withMessage('Discord username must be less than 32 characters').custom(validateSQLCall),
-    body('comments').optional({ checkFalsy: true }).isLength({ max: 1000 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
+    body('comments').optional({ checkFalsy: true }).isLength({ max: 350 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
     body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.')
 ], (req, res) => {
     try {
@@ -434,7 +457,8 @@ app.get('/query-people-count-by-date', (req, res) => {
 
 app.get('/query-all-user-data', (req, res) => {
     const query = `
-        SELECT 
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY creation_date) AS 'Turtle #',
             userID AS 'User ID', 
             DATE_FORMAT(creation_date, '%Y-%m-%d, %H:%i') AS 'Creation Date', 
             deviceType AS 'Device Type', 

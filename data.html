@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="chartScripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/colResizable/1.6.0/colResizable.min.js"></script>
+    <script src="logging.js"></script>
 </head>
 <body>
     <div class="container">
@@ -21,6 +22,7 @@
                 <table id="userDataTable">
                     <thead>
                         <tr>
+                            <th>Turtle #</th>
                             <th>User ID</th>
                             <th>Creation Date</th>
                             <th>Device Type</th>
@@ -121,6 +123,7 @@
                     alert("Failed to send confirmation code: " + errorData.error);
                 }
             } catch (error) {
+                logToServer(error, 'Confirmation code was unable to be sent for data purging.');
                 console.error("Error sending confirmation code: ", error);
                 alert("An error occurred while sending confirmation code.");
             }
@@ -137,20 +140,70 @@
                 });
 
                 if (response.ok) {
+                    logToServer('info', 'The data from the userData relation was purged successfully.');
                     swal({
                         title: "Data Purged",
                         icon: "success", 
                         text: "The data has been purged successfully."
                     })
                 } else {
+                    logToServer('error', 'The data from the userData relation was not purged successfully.');
                     const errorData = await response.json();
                     alert("Failed to delete data: " + errorData.error);
                 }
             } catch (error) {
+                logToServer('error', 'An error occurred when trying to verify the confirmation code for data purging');
                 console.error("Error verifying confirmation code: ", error);
                 alert("An error occurred while verifying confirmation code.");
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const table = document.getElementById('userDataTable');
+            const tableHeader = table.querySelector('thead');
+            const tableBody = table.querySelector('tbody');
+
+            // Function to calculate and set column widths
+            function setColumnWidths() {
+                const columns = tableHeader.querySelectorAll('th');
+                const colWidths = Array(columns.length).fill(0);
+
+                // Create an off-screen element to measure text width
+                const measurer = document.createElement('span');
+                document.body.appendChild(measurer);
+                measurer.style.visibility = 'hidden';
+                measurer.style.whiteSpace = 'nowrap';
+
+                // Calculate maximum width for each column (excluding Comments)
+                tableBody.querySelectorAll('tr').forEach(row => {
+                    row.querySelectorAll('td').forEach((cell, index) => {
+                        if (index < columns.length - 1) { // Exclude last column (Comments)
+                            measurer.textContent = cell.textContent;
+                            const cellWidth = measurer.offsetWidth;
+                            if (cellWidth > colWidths[index]) {
+                                colWidths[index] = cellWidth;
+                            }
+                        }
+                    });
+                });
+
+                // Set widths for each column (excluding Comments)
+                columns.forEach((col, index) => {
+                    if (index < columns.length - 1) { // Exclude last column (Comments)
+                        col.style.width = colWidths[index] + 'px';
+                    }
+                });
+
+                // Ensure comments column takes remaining space
+                columns[columns.length - 1].style.width = 'auto';
+
+                // Remove the off-screen measurer
+                document.body.removeChild(measurer);
+            }
+
+            // Call function to set column widths after table is populated
+            setColumnWidths();
+        });
     </script>
 </body>
 

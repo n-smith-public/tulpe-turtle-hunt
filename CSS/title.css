@@ -621,3 +621,14 @@ a:not(:hover)::after {
     border-style: solid;
     border-color: #333 transparent transparent transparent;
 }
+
+.char-count {
+    display: block;
+    margin-top: -8px;
+    font-size: 0.9em;
+    color: black;
+    margin-bottom: 12px;
+}
+.char-count.warning {
+    color: red;
+}

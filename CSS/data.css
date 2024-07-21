@@ -210,7 +210,7 @@ canvas {
 
 .data-table table {
     width: auto; /* Allow table to expand based on content */
-    min-width: 100%; /* Ensure minimum width is full sidebar width */
+    table-layout: auto;
     border-collapse: collapse;
 }
 
@@ -218,6 +218,7 @@ canvas {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    white-space: nowrap;
 }
 
 .data-table th {
@@ -226,6 +227,10 @@ canvas {
 
 .data-table tbody {
     background-color: #f2f2f2;
+}
+
+.data-table th:nth-child(11), .data-table td:nth-child(11) {
+    width: 100%; /* Allow comments column to take up remaining space */
 }
 
 .deletebtn {

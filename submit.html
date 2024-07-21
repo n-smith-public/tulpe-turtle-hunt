@@ -9,6 +9,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script src="logging.js"></script>
         <script>
             setTimeout(function() {
                 window.location.href = '/';
@@ -42,12 +43,44 @@
                             <input type="text" id="discord" name="discord" placeholder="Please don't include the @">
                             <label for="comments">Comments:</label>
                             <input id="comments" name="comments"></textarea>
+                            <span class="char-count" id="charInComments">0 / 300</span>
                             <button type="submit" id="submitBtn">Submit</button>
                         </form>
                     </div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const form = document.getElementById('dataForm');
+
+                            const commentsTextArea = document.getElementById('comments');
+                            const charCountComments = document.getElementById('charInComments');
+                            const maxCharComments = 300;
+
+                            function updateCount() {
+                                const currentChar = commentsTextArea.value.length;
+                                charCountComments.textContent = `${currentChar} / ${maxCharComments}`
+
+                                if (maxCharComments - currentChar <= 50 ) {
+                                    charCountComments.classList.add('warning');
+                                } else {
+                                    charCountComments.classList.remove('warning');
+                                }
+
+                                if (currentChar >= maxCharComments - 1) {
+                                    commentsTextArea.value = commentsTextArea.value.substring(0, maxCharComments);
+                                }
+                            }
+
+                            function autoResize() {
+                                commentsTextArea.style.height = 'auto';
+                                commentsTextArea.style.height = `${commentsTextArea.scrollHeight}px`;
+                            }
+
+                            commentsTextArea.addEventListener('input', () => {
+                                updateCount();
+                                autoResize();
+                            });
+                            autoResize();
+                            updateCount();
                             form.reset();
                         });
                     </script>
@@ -95,8 +128,10 @@
                 .then(response => {
                     if (!response.ok) {
                         if (response.status === 406) {
+                            logToServer('error', 'User input to submission form could not be validated properly.');
                             throw new Error('Validation error: Input could not be validated properly,');
                         }
+                        logToServer('error', 'User input to submission form was not submitted successfully.');
                         throw new Error('Failed to submit data.');
                     }
                     return response.json();

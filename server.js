@@ -174,9 +174,9 @@ app.post('/verify-confirmation-code', async (req, res) => {
         return res.status(400).json({ error: 'Confirmation code has expired.' });
     }
     try {
-        await promisify(pool.query).bind(pool)("DELETE FROM userData WHERE firstName <> 'Sample' AND lastName <> 'Data';");
+        await promisify(pool.query).bind(pool)("DELETE FROM userData WHERE NOT (firstName = 'Sample' AND lastName = 'Data');");
         confirmationCode = '';
-        res.status(200),json({ message: 'Data deleted successfully. '});
+        res.status(200).json({ message: 'Data deleted successfully. '});
     } catch(error) {
         console.error('Error deleting data: ', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -341,10 +341,11 @@ app.post('/submit-data', [
         .isLength({ max: 50 }).withMessage('Email must be less than 50 characters').custom(validateSQLCall),
     body('discord').optional({ checkFalsy: true }).isLength({ max: 32 }).withMessage('Discord username must be less than 32 characters').custom(validateSQLCall),
     body('comments').optional({ checkFalsy: true }).isLength({ max: 350 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
-    body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.')
+    body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.'),
+    body('turtlePin').optional({ checkFalsy: true }).custom(validateSQLCall)
 ], (req, res) => {
     try {
-        const { deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
+        const { turtlePin, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
 
     /*if (!req.isAuthenticated()) {
         res.status(400).send('Unauthorized.');
@@ -359,8 +360,8 @@ app.post('/submit-data', [
             });
         }
 
-        const sql = 'INSERT INTO userData (deviceType, firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        const values = [deviceType, firstName, lastName, pronouns, lodge, email, discord, comments];
+        const sql = 'INSERT INTO userData (pinID, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [turtlePin, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments];
 
         pool.query(sql, values, (error, results) => {
             if (error) {

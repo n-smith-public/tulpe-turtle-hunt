@@ -12,6 +12,10 @@
     <script src="chartScripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/colResizable/1.6.0/colResizable.min.js"></script>
     <script src="logging.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="Media/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Media/favicon-16x16.png">
+    <link rel="manifest" href="Media/site.webmanifest">
 </head>
 <body>
     <div class="container">
@@ -71,7 +75,7 @@
 
         <div class="button-container">
             <button id="refresh-button">Refresh Data</button>
-            <button id="return" onclick="returnStart()">Return</button>
+            <button id="return" onclick="toDisclaimer()">Return</button>
         </div>
     </div>
     <script>
@@ -92,12 +96,9 @@
             document.getElementById("showFullData").style.width = "0";
             document.getElementById("openbtn").style.display = "block";
         }
-        
-        function returnStart() {
-            window.location.href = '/';
-        }
 
         async function sendConfirmationCode() {
+            warnSFX();
             const confirmation = confirm("Are you sure you want to purge the data?");
             if (!confirmation) {
                 return;

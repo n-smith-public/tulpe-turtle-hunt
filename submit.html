@@ -2,17 +2,21 @@
 <html>
     <head>
         <title>Submission</title>
-        <link rel="stylesheet" href="/CSS/title.css?newcache02">
+        <link rel="stylesheet" href="/CSS/title.css">
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="Media/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="Media/favicon-16x16.png">
+        <link rel="manifest" href="Media/site.webmanifest">
         <script src="logging.js"></script>
         <script>
             setTimeout(function() {
-                window.location.href = '/';
+                toDisclaimer();
             }, 3600000)
         </script>
     </head>
@@ -110,11 +114,6 @@
                 }
             }
 
-            function successSFX() {
-                const audio = new Audio('Media/submitComplete.wav');
-                audio.play();
-            }
-
             function submitDataNoAuth(formData) {
                 formData.deviceType = getDeviceType();
 
@@ -144,7 +143,7 @@
                         text: "Your data has been successfully submitted. Have a great day! \n\nTry to get someone else to scan the code as well!"
                     })
                     .then(function() {
-                        window.location.href='/';
+                        toDisclaimer();
                     });
                 })
                 .catch(error => {
@@ -180,9 +179,22 @@
                     comments: document.getElementById('comments').value,
                 };
 
-                formData.deviceTypes = getDeviceType();
+                swal({
+                    text: 'If you would like, please put the number that is on the bottom of your turtle: ',
+                    content: "input",
+                    button: {
+                        text: "Submit",
+                        closeModal: false
+                    }
+                }).then(turtlePin => {
+                    if (turtlePin !== null) {
+                        formData.turtlePin = turtlePin;
+                    }
 
-                submitDataNoAuth(formData);
+                    formData.deviceTypes = getDeviceType();
+                    submitDataNoAuth(formData);
+                    swal.close();
+                });
             });
             function addNestedGroupsToSelect(data) {
                 data.forEach(function(region) {

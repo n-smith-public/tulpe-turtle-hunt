@@ -7,6 +7,10 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <script src="display-settings.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="Media/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Media/favicon-16x16.png">
+    <link rel="manifest" href="Media/site.webmanifest">
     <script src="logging.js"></script>
 </head>
 <body>
@@ -36,21 +40,13 @@
         </div>
 
         <form>
-            <button type="button" onclick="goLog()">
+            <button type="button" onclick="toDevlog()">
                 Dev Log
             </button>
-            <button type="button" onclick="goBack()">
+            <button type="button" onclick="toDisclaimer()">
                 Return
             </button>
         </form>
-        <script>
-            function goLog() {
-                window.location.href = '/log';
-            }
-            function goBack() {
-                window.location.href = '/';
-            }
-        </script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const options = {

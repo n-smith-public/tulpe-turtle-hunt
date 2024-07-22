@@ -2,12 +2,16 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="CSS/title.css?newcache03">
+    <link rel="stylesheet" href="CSS/title.css">
     <meta charset="utf-8">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="logging.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="Media/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Media/favicon-16x16.png">
+    <link rel="manifest" href="Media/site.webmanifest">
 </head>
 <body>
     <div class="titleBackground">
@@ -28,22 +32,14 @@
                     <br>
                     <div class="buttonContainer">
                         <form>
-                            <button type="button" onclick="moveToAbout()">
+                            <button type="button" onclick="toAbout()">
                                 About
                             </button>
-                            <button type="button" onclick="moveToSubmissionPage()">
+                            <button type="button" onclick="toSubmit()">
                                 Continue
                             </button>
                         </form>
                     </div>
-                    <script>
-                        function moveToSubmissionPage() {
-                            window.location.href = '/submit';
-                        }
-                        function moveToAbout() {
-                            window.location.href = '/about';
-                        }
-                    </script>
                 </div>
             </div>
 
@@ -95,10 +91,11 @@
 
                         if (response.ok) {
                             logToServer('info', 'A user has accessed the data dashboard. If this is unexpected, changing the password is recommended.');
-                            window.location.href = '/queries'; // Redirect to data dashbord if password is correct
+                            toDashboard();
                         } else if (response.status === 429) {
                             const errorData = await response.json();
                             logToServer('warn', 'A user has attempted to access the data dashboard too many times, and has been locked out.');
+                            warnSFX();
                             swal({
                                 icon: 'error',
                                 title: 'Too many attempts',
@@ -108,6 +105,7 @@
                         } else {
                             const errorData = await response.json();
                             logToServer('info', 'A user has attempted to access the data dashboard with an incorrect password.');
+                            warnSFX();
                             swal({
                                 title: "Incorrect Password",
                                 icon: "warning", 
@@ -116,6 +114,7 @@
                         }
                     } catch (error) {
                         console.error('Error verifying password:', error);
+                        warnSFX();
                         swal({
                             title: "Password Validation Error",
                             icon: "error", 
@@ -124,6 +123,7 @@
                     }
                 } else {
                     logToServer('info', 'A user has attempted to access the data dashboard with an incorrect password.');
+                    warnSFX();
                     swal({
                         title: "Incorrect Password",
                         icon: "warning", 
@@ -131,30 +131,6 @@
                     })
                 }
             }
-
-            /*async function resetAttempts() {
-                try {
-                    const response = await fetch('/reset-attempts', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ ip: '96.223.147.5' })
-                    });
-
-                    if (response.ok) {
-                        const results = await response.json();
-                        alert('Login attempts reset successfully.');
-                        checkLockoutStatus();
-                    } else {
-                        const errorData = await response.json();
-                        alert('Login attempts failed to reset: ' + errorData.error);
-                    }
-                } catch (error) {
-                    console.error('Error resetting attempts:', error);
-                    alert('An error occurred.');
-                }
-            }*/
 
             fetchRowCount();
             checkLockoutStatus();

@@ -6,11 +6,10 @@
     <title>Data Dashboard</title>
     <link rel="stylesheet" href="CSS/data.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="chartScripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/colResizable/1.6.0/colResizable.min.js"></script>
     <script src="logging.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="Media/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon-32x32.png">
@@ -79,14 +78,6 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('#userDataTable').colResizable({
-                liveDrag: true,
-                gripInnerHtml: "<div class='grip'></div>",
-                draggingClass: 'dragging'
-            });
-        });
-
         function openNav() {
             document.getElementById("showFullData").style.width = "100%";
             document.getElementById("openbtn").style.display = "none";

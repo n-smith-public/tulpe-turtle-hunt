@@ -14,6 +14,7 @@ const crypto = require( 'crypto' );
 const fs = require( 'fs' );
 const { promisify } = require('util');
 const consoleStamp = require('console-stamp');
+const { RateLimiterRedis } = require('rate-limiter-flexible');
 
 consoleStamp(console, {
     format: ':date(yyyy.mm.dd HH:MM:ss.l)',
@@ -116,6 +117,25 @@ app.use('/consoleMessage', (req, res) => {
 
     res.status(200).send('Console message received');
 });
+
+const limiter = new RateLimiterRedis({
+    storeClient: redisClient,
+    points: 60,
+    duration: 60,
+});
+
+const rateLimiterMiddleware = (req, res, next) => {
+    limiter.consume(req.ip)
+        .then(() => {
+            next();
+        })
+        .catch(() => {
+            console.log('Too many requests from IP', req.ip);
+            res.status(429).json({ message: 'Too many requests, please try again later.' });
+        });
+};
+
+app.use(rateLimiterMiddleware);
 
 const ConfEmail = process.env.CONFIRMATION_EMAIL;
 const ConfPass = process.env.CONFIRMATION_PASSWORD;

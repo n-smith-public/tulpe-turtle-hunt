@@ -115,8 +115,8 @@
                     alert("Failed to send confirmation code: " + errorData.error);
                 }
             } catch (error) {
-                logToServer(error, 'Confirmation code was unable to be sent for data purging.');
-                console.error("Error sending confirmation code: ", error);
+                logToServer(error, 'Confirmation code was unable to be sent for data purging. Error: ', error);
+                //console.error("Error sending confirmation code: ", error);
                 alert("An error occurred while sending confirmation code.");
             }
         }
@@ -145,7 +145,7 @@
                 }
             } catch (error) {
                 logToServer('error', 'An error occurred when trying to verify the confirmation code for data purging');
-                console.error("Error verifying confirmation code: ", error);
+                //console.error("Error verifying confirmation code: ", error);
                 alert("An error occurred while verifying confirmation code.");
             }
         }

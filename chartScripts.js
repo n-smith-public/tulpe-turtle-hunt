@@ -1,3 +1,24 @@
+// Helper function, see ./logging.js
+async function logToServer(level, message) {
+    try {
+        const response = await fetch('/consoleMessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ level, message }),
+        });
+
+        if (response.ok) {
+            //console.log('Log message sent successfully');
+        } else {
+            console.error('Failed to send log message');
+        }
+    } catch (error) {
+        console.error('Error sending log message:', error);
+    }
+}
+
 let lineChartData = [];
 let lodgeChart = null;
 let pronounsChart = null;
@@ -13,8 +34,6 @@ const refreshCharts = () => {
     renderChart('device-chart');
 };
 
-
-// Helper function to get chart name for button text
 function getChartName(chartId) {
     switch (chartId) {
         case 'line-chart':
@@ -30,7 +49,6 @@ function getChartName(chartId) {
     }
 }
 
-// Function to fetch data from API endpoints
 const fetchData = async (endpoint) => {
     try {
         const response = await fetch(endpoint);
@@ -38,16 +56,15 @@ const fetchData = async (endpoint) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(`Data fetched from ${endpoint}:`, data);
+        //logToServer('info', `The fetchData() function has fetched the data from ${endpoint}.`);
         return data;
     } catch (error) {
-        console.error(`Failed to fetch data from ${endpoint}:`, error);
+        logToServer('error', `The fetchData() function failed to fetch the data from ${endpoint}. Error: `, error);
+        //console.error(`Failed to fetch data from ${endpoint}:`, error);
         return [];
     }
 };
 
-// Function to render or update chart
-// Function to render or update chart
 const renderChart = async (chartId) => {
     let chartInstance = null;
     let endpoint = '';
@@ -78,24 +95,17 @@ const renderChart = async (chartId) => {
 
     switch (chartId) {
         case 'line-chart':
-            // Line chart needs to maintain previous data for a gradually increasing line
-            lineChartData.push(...data); // Append new data to global variable
+            lineChartData.push(...data);
             lineChartData.sort((a, b) => new Date(a.Date) - new Date(b.Date)); // Sort by Date
             
-            // Update labels and counts for line chart
             labels = lineChartData.map(entry => entry.Date);
             counts = lineChartData.map(entry => entry.Count);
 
             break;
         case 'lodge-chart':
-            // Lodge chart may have multiple entries, so we map them
-            labels = data.map(entry => entry.Lodge);
-            counts = data.map(entry => entry.Count);
-            break;
         case 'pronouns-chart':
         case 'device-chart':
-            // Pronouns and Device charts should have labels and counts
-            labels = data.map(entry => entry.Label || entry.Pronouns || entry['Device Data']);
+            labels = data.map(entry => entry.Label || entry.Lodge || entry.Pronouns || entry['Device Data']);
             counts = data.map(entry => entry.Count);
             break;
         default:
@@ -184,7 +194,8 @@ const populateDataTable = async () => {
     const data = await fetchData(endpoint);
 
     if (data.length === 0) {
-        console.log('No data fetched.');
+        logToConsole('error', 'When attempting to run the populateDataTable() function, there was no data found to populate it with.');
+        //console.log('No data fetched.');
         return;
     }
 

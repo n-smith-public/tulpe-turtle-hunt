@@ -10,7 +10,7 @@ async function logToServer(level, message) {
         });
 
         if (response.ok) {
-            console.log('Log message sent successfully');
+            //console.log('Log message sent successfully');
         } else {
             console.error('Failed to send log message');
         }

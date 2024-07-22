@@ -109,16 +109,16 @@
                 const computer = /windows|mac|linux/i;
 
                 if (android.test(details)) {
-                    console.log("Using an Android");
+                    //console.log("Using an Android");
                     return "Android";
                 } else if (apple.test(details)) {
-                    console.log("Using an Apple");
+                    //console.log("Using an Apple");
                     return "iOS";
                 } else if (computer.test(details)) {
-                    console.log("Using a Computer");
+                    //console.log("Using a Computer");
                     return "Computer";
                 } else {
-                    console.log("Using Other");
+                    //console.log("Using Other");
                     return "Other";
                 }
             }
@@ -156,7 +156,8 @@
                     });
                 })
                 .catch(error => {
-                    console.error('Error submitting data: ', error);
+                    logToServer('error', 'An error occurred when trying to submit data. Error: ', error);
+                    //console.error('Error submitting data: ', error);
                     if (error.message.includes('Validation error')) {
                         swal({
                             title: "Error",
@@ -176,7 +177,8 @@
             document.getElementById('dataForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                console.log('Submission entered.');
+                logToServer('info', 'An entry to the userData table has been submitted.');
+                //console.log('Submission entered.');
         
                 const formData = {
                     firstName: document.getElementById('firstName').value,

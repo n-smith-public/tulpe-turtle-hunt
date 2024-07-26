@@ -177,7 +177,7 @@
             document.getElementById('dataForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                logToServer('info', 'An entry to the userData table has been submitted.');
+                //logToServer('info', 'An entry to the userData table has been submitted.');
                 //console.log('Submission entered.');
         
                 const formData = {
@@ -190,22 +190,8 @@
                     comments: document.getElementById('comments').value,
                 };
 
-                swal({
-                    text: 'If you would like, please put the number that is on the bottom of your turtle: ',
-                    content: "input",
-                    button: {
-                        text: "Submit",
-                        closeModal: false
-                    }
-                }).then(turtlePin => {
-                    if (turtlePin !== null) {
-                        formData.turtlePin = turtlePin;
-                    }
-
                     formData.deviceTypes = getDeviceType();
                     submitDataNoAuth(formData);
-                    swal.close();
-                });
             });
             function addNestedGroupsToSelect(data) {
                 data.forEach(function(region) {

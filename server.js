@@ -95,17 +95,21 @@ app.use(session({
     }
 }));
 
+let logs = [];
 app.use('/consoleMessage', (req, res) => {
     const { level, message } = req.body;
+    const logEntry = { level, message, timestamp: new Date() };
 
     switch(level) {
         case 'info':
             console.info(message);
             break;
         case 'warn':
+            logs.push(logEntry);
             console.warn(message);
             break;
         case 'error':
+            logs.push(logEntry);
             console.error(message);
             break;
         case 'debug':
@@ -309,6 +313,44 @@ app.get('/lockout-status', async (req, res) => {
     }
 });
 
+async function sendReports(logs) {
+    if (logs.length === 0) {
+        return;
+    }
+    const templatePath = path.join(__dirname, 'debugReport.html');
+    fs.readFile(templatePath, 'utf8', async (err, htmlTemplate) => {
+        if (err) {
+            console.error('Error reading HTML template: ', err);
+            return;
+        }
+
+        const logEntries = logs.map(log => `
+            <div class="log-entry ${log.level}">
+                <span class="timestamp">[${log.timestamp}]</span>
+                <span class="message">${log.message}</span>
+            </div>
+        `).join('');
+
+        const emailContent = htmlTemplate.replace('{{logEntries}}', logEntries);
+        try {
+            await transporter.sendMail({
+                from: 'Tulpe Turtle Hunt <greenbueller@greenbueller.com>',
+                to: 'pennygaming10@gmail.com',
+                subject: 'Console Reports',
+                html: emailContent,
+            });
+            console.log('Console Reports sent successfully.');
+        } catch(error) {
+            console.error('Error sending Console Reports: ', error);
+        }
+    })
+};
+
+setInterval(() => {
+    sendReports(logs);
+    logs = [];
+}, 3600000);
+
 
 const pool = mysql.createPool({
   connectionLimit: 60000,
@@ -361,11 +403,10 @@ app.post('/submit-data', [
         .isLength({ max: 50 }).withMessage('Email must be less than 50 characters').custom(validateSQLCall),
     body('discord').optional({ checkFalsy: true }).isLength({ max: 32 }).withMessage('Discord username must be less than 32 characters').custom(validateSQLCall),
     body('comments').optional({ checkFalsy: true }).isLength({ max: 350 }).withMessage('Comments must be less than 1,000 characters.').custom(validateSQLCall),
-    body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.'),
-    body('turtlePin').optional({ checkFalsy: true }).custom(validateSQLCall)
+    body('deviceType').isIn(['Android', 'Computer', 'iOS', 'Other']).withMessage('Device type must be either mobile or computer.')
 ], (req, res) => {
     try {
-        const { turtlePin, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
+        const { deviceType, firstName, lastName, pronouns, lodge, email, discord, comments } = req.body;
 
     /*if (!req.isAuthenticated()) {
         res.status(400).send('Unauthorized.');
@@ -380,15 +421,15 @@ app.post('/submit-data', [
             });
         }
 
-        const sql = 'INSERT INTO userData (pinID, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        const values = [turtlePin, deviceType, firstName, lastName, pronouns, lodge, email, discord, comments];
+        const sql = 'INSERT INTO userData (deviceType, firstName, lastName, pronouns, lodge, email, discord, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [deviceType, firstName, lastName, pronouns, lodge, email, discord, comments];
 
         pool.query(sql, values, (error, results) => {
             if (error) {
                 console.error('Error inserting data:', error);
                 return res.status(500).send({ error: 'Error inserting data' });
             }
-            console.log('Data inserted successfully: ', results);
+            console.info('An entry to the userData table has been submitted. Results: ', results);
             res.status(200).json({ message: 'Data submitted successfully!' });
         });
     } catch (err) {

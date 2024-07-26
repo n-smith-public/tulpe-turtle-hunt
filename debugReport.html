@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Purge Confirmation Code</title>
+    <style>
+    /* Animations */
+        @keyframes linkHoverEffect {
+            0% {
+                color: #0077cc;
+                transform: scale(1);
+                border-color: transparent;
+            }
+            10% {
+                color: #0088cc;
+                transform: scale(1.02);
+                border-color: #0088cc;
+            }
+            20% {
+                color: #0099cc;
+                transform: scale(1.04);
+                border-color: #0099cc;
+            }
+            30% {
+                color: #00aacc;
+                transform: scale(1.06);
+                border-color: #00aacc;
+            }
+            40% {
+                color: #00bbcc;
+                transform: scale(1.08);
+                border-color: #00bbcc;
+            }
+            50% {
+                color: #00cccc;
+                transform: scale(1.10);
+                border-color: #00cccc;
+            }
+            60% {
+                color: #00bbcc;
+                transform: scale(1.08);
+                border-color: #00bbcc;
+            }
+            70% {
+                color: #00aacc;
+                transform: scale(1.06);
+                border-color: #00aacc;
+            }
+            80% {
+                color: #0099cc;
+                transform: scale(1.04);
+                border-color: #0099cc;
+            }
+            90% {
+                color: #0088cc;
+                transform: scale(1.02);
+                border-color: #0088cc;
+            }
+            100% {
+                color: #0077cc;
+                transform: scale(1);
+                border-color: #0077cc;
+            }
+        }
+
+    /* CSS */
+        .titleBackground {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: lightgray;
+            overflow: hidden;
+        }
+
+        .foregroundContainer {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(164, 164, 164, 0.7);
+            border: 2px solid rgba(207, 207, 207, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px auto;
+        }
+
+        .titleForeground {
+            z-index: 1;
+            height: auto;
+            max-width: 100%;
+            position: absolute;
+            left: 0;
+        }
+
+        .contentContainer {
+            z-index: 2;
+            position: relative;
+            text-align: center;
+        }
+
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .timestamp {
+            color: maroon;
+            letter-spacing: 0.3em;
+        }
+
+        a {
+            color: #0077cc;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+    /* Hover animation */
+        a:hover {
+            animation: linkHoverEffect 1s forwards;
+            border-bottom: 2px solid transparent;
+        }
+
+        a:hover::after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            height: 2px;
+            background-color: currentColor;
+            transition: width 0.3 ease;
+        }
+
+        a:not(:hover)::after {
+            width: 0;
+            opacity: 0;
+        }
+
+        .footer {
+            margin-top: 10%;
+            margin-bottom: -5%;
+            color: gray;
+            font-size: 0.6rem;
+        }
+
+        .warn {
+            color: yellow
+        }
+
+        .error {
+            color: red
+        }
+    </style>
+</head>
+<body>
+    <div class="titleBackground">
+        <div class="foregroundContainer">
+            <div class="contentContainer">
+                <h1 class="titleText"><a href="https://turtle.greenbueller.com">Tulpe Turtle Hunt</a></h1>
+                <div class="introText">
+                    <br>
+                    <p>Here is your hourly log report:</p>
+                    <p>{{logEntries}}</p>
+                </div>
+                <div class="footer">
+                    <p>This email was sent automatically. Please do not reply.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
